@@ -282,4 +282,192 @@ Die IP-Adresse des Tvheadend-Servers lautet \textit{192.168.178.253}. Sie unters
 
 \section{Tvheadend-Server}
 
+\subsection{Sicherstellung der Datenintegrität}
+
+Zur Sicherstellung der Datenintegrität bei der Übermittlung des Abbilds wurde folgender MD5-Hash in der Datei \textit{tvheadend.raw.md5} zur Verfügung gestellt:
+
+\begin{verbatim}
+3ac92767e688451bde8ca4dd8b82b5b5  tvheadend.raw
+\end{verbatim}
+
+Dieser wurde vor Beginn und nach Ende jeder Analyse-Sitzung des Abbilds überprüft:
+
+\begin{cmd}
+\begin{verbatim}
+tvheadend.raw: OK
+\end{verbatim}
+\caption{md5sum -c tvheadend.raw.md5}
+\end{cmd}
+
+\subsection{Analyse des Abbilds}
+
+Analog zu \autoref{sec:kodi-rawanalysis} wurde mit Hilfe des Kommandos \autoref{cmd:tvheadend-mmls} die Partitionierung des Abbilds analysiert. Wie beim Abbild des Wohnzimmer-PCs enthält das Abbild des Tvheadend-Servers genau eine Linux-Partition, die bei Sektor 2048 beginnt.
+
+\subsection{Identifizierung des Betriebssystems}
+\label{sec:tvheadend-os}
+
+Mit den selbem Vorgehen wie in \autoref{sec:kodi-os} wurde in diesem Abbild das gleiche Betriebssystem in der gleichen Version festgestellt:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{cccc}
+\hline 
+Betriebssystem & Distribution & Version & Code-Name \\ 
+\hline 
+Linux & Ubuntu & 14.04.02 LTS & Trusty \\ 
+\hline 
+\end{tabular} 
+\caption{Informationen zum Betriebssystem des Tvheadend-Servers}
+\label{table:tvheadend-os}
+\end{table}
+
+\subsection{Konfiguration des Betriebssystems}
+
+\subsubsection{Hostname}
+\label{sec:tvheadend-hostname}
+
+Die Datei \textit{/etc/hostname} mit der Inode 473 gibt Auskunft über den Hostnamen des Systems:
+
+\begin{cmd}
+\begin{verbatim}
+vagrant-ubuntu-trusty-64
+\end{verbatim}
+\caption{icat -o 2048 tvheadend.raw 473}
+\end{cmd}
+
+Der Hostname lautet \textit{vagrant-ubuntu-trusty-64}.
+
+\subsubsection{Netzwerkkonfiguration}
+\label{sec:tvheadend-network}
+
+In Debian/Ubuntu-Betriebssystemen wird das Netzwerk in der Datei \textit{/etc/network/interfaces} konfiguriert. Die relevanten Zeilen daraus lauten (vollständige Datei siehe Kommando \autoref{cmd:tvheadend-interfaces}):
+
+\begin{verbatim}
+address 192.168.178.253
+netmask 255.255.255.0
+\end{verbatim}
+
+Die IP-Adresse des Tvheadend-Servers lautet \textit{192.168.178.253}, welches dem selben privaten \mbox{Klasse-C} Netzwerk 192.168.178.200/24 zugeordnet werden kann, in dem auch der Wohzimmer-PC betrieben wird. Die IP-Adresse stimmt mit der im Kodi Tvheadend Addon konfigurierten IP-Adresse überein (siehe \autoref{sec:kodi-tvheadend}).
+
+\subsubsection{Benutzer}
+\label{sec:tvheadend-users}
+
+Die eingerichteten Benutzer im Betriebssystem wurde der \textit{/etc/passwd} entnommen (siehe Kommando \autoref{cmd:tvheadend-passwd}). Neben den vom Betriebssystem konfigurierten Systembenutzern sind folgende Benutzer zusätzlich angelegt:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ccccc}
+\hline 
+Benutzer & Benutzer-ID & Gruppen-ID & Heimat-Verzeichnis & Shell \\ 
+\hline 
+hts & 108 & 113 & /home/hts & /bin/bash \\ 
+\hline 
+ubuntu & 1001 & 1001 & /home/ubuntu & /bin/bash \\ 
+\hline 
+\end{tabular} 
+\caption{Konfigurierte Benutzer auf dem Tvheadend-Server}
+\end{table}
+
+\subsection{Installierter Tvheadend Dienst}
+
+In Debian/Ubuntu-Systemen können fremde Paketquellen zur Installation von Drittsoftwarepaketen in dem Verzeichnis \textit{/etc/apt/sources.list.d/} konfiguriert werden. Das Kommando \autoref{cmd:tvheadend-aptdir} listet die Dateien in diesem Verzeichnis im Abbild des Tvheadend-Servers auf.
+
+\begin{cmd}[H]
+\begin{verbatim}
+r/r 58238:	tvheadend_stable.list
+r/r * 58238(realloc):	tvheadend_stable.list20150504-1820-egq9p2
+\end{verbatim}
+\caption{fls -o 2048 tvheadend.raw 1289}
+\label{cmd:tvheadend-aptdir}
+\end{cmd}
+
+Der Inhalt der Datei \textit{tvheadend\_stable.list} (siehe Kommando \autoref{cmd:tvheadend-apttvheadend}) konfiguriert die HTTP-URL des Hersteller-Repository, die die binären Dateien des Tvheadend Softwarepakets für die passende Ubuntu \textit{trusty}-Version bereit hält.
+
+\begin{cmd}[H]
+\begin{verbatim}
+# This file is managed by Puppet. DO NOT EDIT.
+# tvheadend_stable
+deb http://apt.tvheadend.org/stable/ trusty main
+deb-src http://apt.tvheadend.org/stable/ trusty main
+\end{verbatim}
+\caption{icat -o 2048 tvheadend.raw 58238}
+\label{cmd:tvheadend-apttvheadend}
+\end{cmd}
+
+Mittels Kommando \autoref{cmd:tvheadend-dpkg} wurden im Tvheadend Abbild das Softwarepaket \textit{tvheadend} als installiert identifiziert.
+
+Die speziell für Tvheadend konfigurierte, fremde APT-Quelle und die Indizien des installierten Tvheadend-Softwarepakets weisen darauf hin, dass Tvheadend bewusst auf dem System installiert wurde. 
+
+Im nächsten Abschnitt soll analysiert werden, ob auch eine Nutzung stattgefunden hat.
+
+\subsection{Nutzung des Tvheadend Dienstes}
+
+Nach kurzer Sichtung der Heimatverzeichnisse der zusätzlich angelegten Benutzer (siehe \autoref{sec:tvheadend-users}) konnte das Verzeichnis \textit{/home/hts} und der Benutzer \textit{hts} dem Tvheadend Dienst zugeordnet werden. Kommando \autoref{cmd:tvheadend-homedir} listet den Inhalt des Verzeichnisses \textit{/home/hts} mit der Inode 80155 auf.
+
+\begin{cmd}[H]
+\begin{verbatim}
+d/d 80156:	.hts
+r/r 79532:	Wer wird Millionär? Überraschungs-Special.mkv
+r/r 79536:	rbb AKTUELL.mkv
+r/r 79539:	heute-journal.mkv
+\end{verbatim}
+\caption{fls -o 2048 tvheadend.raw 80155}
+\label{cmd:tvheadend-homedir}
+\end{cmd}
+
+\subsubsection{Videodatei mit Aufnahme eines HD-Senders}
+
+Die im Verzeichnis \textit{/home/hts} abgelegte Datei \textit{"Wer wird Millionär? Überraschungs-Special.mkv"} mit der Inode 79532 wird mit folgendem Kommando in eine Datei exportiert:
+
+\begin{verbatim}
+icat -o 2048 tvheadend.raw 79532 > millionaer.mkv
+\end{verbatim}
+
+Die MD5-Prüfsumme der Datei lautet:
+
+\begin{verbatim}
+37c7f07a730c63c3120202c81fb45b55
+\end{verbatim}
+
+Spielt man die Videodatei mit dem Videoplayer VLC ab, erscheint ein Ausschnitt aus einer \textit{"Wer wird 	Millionär?"}\footnote{\href{https://de.wikipedia.org/wiki/Wer\_wird\_Million\%C3\%A4r}{Wikipedia-Seite über die Quizshow: https://de.wikipedia.org/wiki/Wer\_wird\_Million\%C3\%A4r}}-TV-Folge. \autoref{fig:tvheadend-rtlhd} zeigt einen Screenshot aus der Videowiedergabe. Das Bild ist stark gestört, jedoch ist links oben deutlich das RTLHD-Logo zu erkennen.
+
+Die über Kommando \autoref{cmd:tvheadend-rtlhdaccess} ermittelten Zugriffszeiten auf die Videodatei \textit{"Wer wird Millionär? Überraschungs-Special.mkv"} ist in \autoref{table:kodi-rtlhdaccess} zusammengefasst.
+
+\begin{table}[H]
+\begin{tabular}{ccc}
+\hline 
+Erstellung & Letzter Zugriff & Letzte Änderung \\ 
+\hline 
+04.05.2015 um 21:57:47 & 04.05.2015 um 21:57:47 & 04.05.2015 um 21:58:06 \\ 
+\hline 
+\end{tabular}
+\caption{Zeitpunkte der letzten Dateisystem-Zugriffe auf die Video-Datei \textit{"Wer wird Millionär? Überraschungs-Special.mkv"}}
+\label{table:kodi-rtlhdaccess}
+\end{table}
+
+Die Erstellungszeit und die Zeit der letzten Änderung der Video-Datei fällt in das Zeitfenster, in dem Kodi auf dem Wohnzimmer-PC ausgeführt wurde (siehe \autoref{table:kodi-logfileaccess}). 
+
+Zum Zeitpunkt der Aufzeichnung wurde laut der Online-TV-Recorder-Webseite\footnote{\href{http://www.onlinetvrecorder.com/v2/?go=download\&epg\_id=10438936}{Eintrag bei Online-TV-Recorder: http://www.onlinetvrecorder.com/v2/?go=download\&epg\_id=10438936}} eine \textit{"Wer wird Millionaer UEberraschungs Special"}-Folge ausgestrahlt (04.05.2015 von 20:15 bis 22:15 Uhr CEST).
+
 \section{Smartcard-Server}
+
+\subsection{Sicherstellung der Datenintegrität}
+
+Zur Sicherstellung der Datenintegrität bei der Übermittlung des Abbilds wurde folgender MD5-Hash in der Datei \textit{oscam.raw.md5} zur Verfügung gestellt:
+
+\begin{verbatim}
+1abca0e041569acb38dc776fe2d9fde9  oscam.raw
+\end{verbatim}
+
+Dieser wurde vor Beginn und nach Ende jeder Analyse-Sitzung des Abbilds überprüft:
+
+\begin{cmd}
+\begin{verbatim}
+oscam.raw: OK
+\end{verbatim}
+\caption{md5sum -c oscam.raw.md5}
+\end{cmd}
+
+\subsection{Analyse des Abbilds}
+
+Analog zu \autoref{sec:kodi-rawanalysis} wurde mit Hilfe des Kommandos \autoref{cmd:oscam-mmls} die Partitionierung des Abbilds analysiert. Wie beim Abbild des Wohnzimmer-PCs enthält das Abbild des Smartcard-Servers genau eine Linux-Partition, die bei Sektor 2048 beginnt.

@@ -324,4 +324,61 @@ hts:x:108:113::/home/hts:/bin/bash
 \label{cmd:tvheadend-passwd}
 \end{cmd}
 
+\subsubsection{Software Tvheadend}
+
+\begin{cmd}[H]
+\begin{verbatim}
+r/r 62710:	tvheadend.list
+r/r 80147:	tvheadend.config
+r/r * 62710(realloc):	tvheadend.list-new
+r/r 80145:	tvheadend.prerm
+r/r 80149:	tvheadend.preinst
+r/r 80144:	tvheadend.conffiles
+r/r 80134:	tvheadend.templates
+r/r 80146:	tvheadend.postinst
+r/r 80148:	tvheadend.md5sums
+r/r 80143:	tvheadend.postrm
+\end{verbatim}
+\caption{fls -o 2048 tvheadend.raw 55683 | grep tvheadend}
+\label{cmd:tvheadend-dpkg}
+\end{cmd}
+
+\begin{cmd}
+\begin{verbatim}
+Inode Times:
+Accessed:	2015-05-04 21:57:47.866570388 (CEST)
+File Modified:	2015-05-04 21:58:06.267766957 (CEST)
+Inode Modified:	2015-05-05 11:42:04.267766957 (CEST)
+File Created:	2015-05-04 21:57:47.866570388 (CEST)
+\end{verbatim}
+\caption{istat -o 2048 tvheadend.raw 79532 | grep Times -A 4}
+\label{cmd:tvheadend-rtlhdaccess}
+\end{cmd}
+
 \subsection{Smartcard-Server}
+
+\subsubsection{Abbild}
+
+\begin{cmd}[H]
+\begin{verbatim}
+DOS Partition Table
+Offset Sector: 0
+Units are in 512-byte sectors
+
+     Slot    Start        End          Length       Description
+00:  Meta    0000000000   0000000000   0000000001   Primary Table (#0)
+01:  -----   0000000000   0000002047   0000002048   Unallocated
+02:  00:00   0000002048   0004098047   0004096000   Linux (0x83)
+03:  -----   0004098048   0004198399   0000100352   Unallocated
+\end{verbatim}
+\caption{mmls oscam.raw}
+\label{cmd:oscam-mmls}
+\end{cmd}
+
+\section{Screenshots}
+
+\begin{figure}
+\includegraphics[scale=0.5]{rtlhd-millionaer.png} 
+\caption{Screenshot bei der Wiedergabe der Datei \textit{/home/hts/Wer wird Millionär? Überraschungs-Special.mkv}}
+\label{fig:tvheadend-rtlhd}
+\end{figure}
