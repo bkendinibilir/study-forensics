@@ -1,0 +1,284 @@
+\chapter{Technische Analyse}
+\label{chap:analysis}
+
+Bei der Übergabe des Untersuchungsauftrags wurde von der Staatsanwaltschaft  das Festplatten-Abbild des Wohnzimmer-PCs des Tatverdächtigen zur Analyse zur Verfügung gestellt. Im weiteren Verlauf der Untersuchung dieses Abbild wurden auftragsrelevante Verknüpfungen zu zwei weiteren PC-Serversystemen festgestellt. Die dazu sichergestellten Abbilder wurden bei der  Staatsanwaltschaft angefragt und in den Untersuchungsauftrag aufgenommen.
+
+In \autoref{table:rawfilelist} sind alle Dateien aufgelistet, die zur Analyse übergeben wurden.
+
+\begin{table}[h]
+\begin{tabular}{llll}
+\toprule
+Eingang der Datei & Dateiname & Typ & PC-System \\ 
+\midrule
+14.05.2015 15:25 Uhr & kodi.raw & Festplatten-Abbild & Wohnzimmer-PC \\ 
+14.05.2015 15:25 Uhr & kodi.raw.md5 & MD5 Prüfsumme & Wohnzimmer-PC \\ 
+29.06.2015 12:20 Uhr & tvheadend.raw & Festplatten-Abbild & Tvheadend-Server \\ 
+29.06.2015 12:20 Uhr & tvheadend.raw.md5 & MD5 Prüfsumme & Tvheadend-Server \\ 
+03.07.2015 18:22 Uhr & oscam.raw & Festplatten-Abbild & Smartcard-Server \\ 
+03.07.2015 18:22 Uhr & oscam.raw.md5 & MD5 Prüfsumme & Smartcard-Server \\ 
+\bottomrule
+\end{tabular} 
+\caption{Liste der zur Verfügung gestellten Dateien.}
+\label{table:rawfilelist}
+\end{table}
+
+Die folgenden Kapitel beschreiben die technische Analyse der Abbilder dieser drei PC-Systeme.
+
+\section{Wohnzimmer-PC}
+
+\subsection{Sicherstellung der Datenintegrität}
+
+Zur Sicherstellung der Datenintegrität bei der Übermittlung des Abbilds wurde folgender MD5-Hash in der Datei \textit{kodi.raw.md5} zur Verfügung gestellt:
+
+\begin{verbatim}
+4f354d21e9e3959655bfd1cde1fd32df  kodi.raw
+\end{verbatim}
+
+Dieser wurde vor Beginn und nach Ende einer Analyse des Abbilds überprüft:
+
+\begin{cmd}
+\begin{verbatim}
+kodi.raw: OK
+\end{verbatim}
+\caption{md5sum -c kodi.raw.md5}
+\end{cmd}
+
+\subsection{Analyse des Abbilds}
+
+Im ersten Schritt identifizieren wir mittels des Linux Kommandozeilentools \textit{file} den Grundtyp des Abbilds:
+
+\begin{cmd}
+\begin{verbatim}
+kodi.raw: x86 boot sector
+\end{verbatim}
+\caption{file kodi.raw}
+\end{cmd}
+
+Die Identifizierung der Datei als Bootsektor weist darauf hin, dass ein vollständiges Abbild der Festplatte inklusive Partitionierung vorliegt. Der Bootsektor ist im ersten Sektor einer Festplatte gespeichert und enthält am Ende die Partitionstabelle. Mittels des Analyse-Tools \textit{mmls} extrahieren wir die Partitionierung (siehe Kommando \autoref{cmd:kodi-mmls}).
+
+Das Abbild enthält eine Linux-Partition beginnend bei Sektor 2048. Die in den Kapiteln folgende Analyse konzentriert sich auf diese Partition. Die Aufrufe der Analyse-Werkzeuge werden jeweils mit diesem Startsektor aufgerufen.
+
+\subsection{Identifizierung des Betriebssystems}
+\label{sec:kodi-os}
+
+Die Wurzel-Verzeichnisstruktur und die Linux-Kerneldatei \textit{vmlinux} im Root-Verzeichnis weisen auf ein Linux Betriebssystem hin (siehe Kommando \autoref{cmd:kodi-rootdir}). Über die Datei \textit{/etc/lsb-release} wurden zusätzliche Informationen zur Distribution und Version ermittelt (siehe Kommando \autoref{cmd:kodi-lsb}), die in \autoref{table:kodi-os} zusammengefasst sind:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{cccc}
+\hline 
+Betriebssystem & Distribution & Version & Code-Name \\ 
+\hline 
+Linux & Ubuntu & 14.04.02 LTS & Trusty \\ 
+\hline 
+\end{tabular} 
+\caption{Informationen zum Betriebssystem des Wohnzimmer-PCs}
+\label{table:kodi-os}
+\end{table}
+
+\subsection{Konfiguration des Betriebssystems}
+
+\subsubsection{Hostname}
+\label{sec:kodi-hostname}
+
+Die Datei \textit{/etc/hostname} mit der Inode 473 gibt Auskunft über den Hostnamen des Systems:
+
+\begin{cmd}
+\begin{verbatim}
+vagrant-ubuntu-trusty-64
+\end{verbatim}
+\caption{icat -o 2048 kodi.raw 473}
+\end{cmd}
+
+Der Hostname lautet \textit{vagrant-ubuntu-trusty-64}.
+
+\subsubsection{Netzwerkkonfiguration}
+\label{sec:kodi-network}
+
+In Debian/Ubuntu-Betriebssystemen wird das Netzwerk in der Datei \textit{/etc/network/interfaces} konfiguriert. Die relevanten Zeilen daraus lauten (vollständige Datei siehe Kommando \autoref{cmd:kodi-interfaces}):
+
+\begin{verbatim}
+address 192.168.178.200
+netmask 255.255.255.0
+\end{verbatim}
+
+Die IP-Adresse des Wohnzimmer-PCs lautet \textit{192.168.178.200}, welches dem privaten \mbox{Klasse-C} Netzwerk 192.168.178.200/24 zugeordnet werden kann.
+
+\subsubsection{Benutzer}
+\label{sec:kodi-users}
+
+Die eingerichteten Benutzer im Betriebssystem wurde der \textit{/etc/passwd} entnommen (siehe Kommando \autoref{cmd:kodi-passwd}). Neben den vom Betriebssystem konfigurierten Systembenutzern sind folgende Benutzer zusätzlich angelegt:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ccccc}
+\hline 
+Benutzer & Benutzer-ID & Gruppen-ID & Heimat-Verzeichnis & Shell \\ 
+\hline 
+vagrant & 1000 & 1000 & /home/vagrant & /bin/bash \\ 
+\hline 
+ubuntu & 1001 & 1001 & /home/ubuntu & /bin/bash \\ 
+\hline 
+\end{tabular} 
+\caption{Konfigurierte Benutzer auf dem Wohnzimmer-PC}
+\end{table}
+
+\subsection{Installierte Media Center Software Kodi}
+
+In Debian/Ubuntu-Systemen können fremde Paketquellen zur Installation von Drittsoftwarepaketen in dem Verzeichnis \textit{/etc/apt/sources.list.d/} konfiguriert werden. Das Kommando \autoref{cmd:kodi-ppadir} listet die Dateien in diesem Verzeichnis im Abbild des Wohnzimmer-PCs auf.
+
+\begin{cmd}[H]
+\begin{verbatim}
+r/r 58237:	team-xbmc-ppa-trusty.list
+\end{verbatim}
+\caption{fls -o 2048 kodi.raw 1289}
+\label{cmd:kodi-ppadir}
+\end{cmd}
+
+Die Datei \textit{team-xbmc-ppa-trusty.list} weist auf die Einbindung der Paketquellen der Software \textit{XBMC} über ein PPA-Repository hin. \textit{XBMC} war der ehemalige Name der Software \textit{Kodi}\footnote{\href{http://kodi.tv/about/}{Info-Seite über die Software Kodi: http://kodi.tv/about/}}, der auch in der neuesten Version von Kodi teilweise intern noch verwendet wird. Kodi ist eine Open Source Media Center Software, mit der verschiedene Medien (Videos, Bilder, TV, Radio, etc.) auf einem PC abgespielt oder gespeichert werden kann.
+
+Der Inhalt der Datei \textit{team-xbmc-ppa-trusty.list} (siehe Kommando \autoref{cmd:kodi-ppaxbmc}) konfiguriert die HTTP-URL des PPA-Repository, die die binären Dateien des Kodi Softwarepakets für die passende Ubuntu \textit{trusty}-Version vorhalten.
+
+\begin{cmd}[H]
+\begin{verbatim}
+deb http://ppa.launchpad.net/team-xbmc/ppa/ubuntu trusty main
+# deb-src http://ppa.launchpad.net/team-xbmc/ppa/ubuntu trusty main
+\end{verbatim}
+\caption{icat -o 2048 kodi.raw 58237}
+\label{cmd:kodi-ppaxbmc}
+\end{cmd}
+
+Im Dateisystem von Debian/Ubuntu-Systemen lassen sich installierte Pakete im Verzeichnis \textit{/var/lib/dpkg/info} nachweisen. Für jedes installierte Paket ist dort mindestens die Dateien \textit{Paketname.list} und \textit{Paketname.md5sums} abgelegt. Mittels Kommando \autoref{cmd:kodi-dpkgkodi} wurden die folgenden, installierten Pakete für die Media Center Software Kodi identifiziert:
+
+\begin{itemize}
+\item kodi
+\item kodi-bin
+\item kodi-pvr-tvheadend-hts
+\end{itemize}
+
+\label{sec-kodi-tvheadend-hts}
+Das Paket \textit{kodi-pvr-tvheadend-hts} weist auf eine Erweiterung von Kodi hin, die Kodi an die zusätzliche Software namens Tvheadend\footnote{\href{https://tvheadend.org/}{Webseite der Software Tvheadend: https://tvheadend.org/}} anbindet. Diese Erweiterung wird im späteren Verlauf der Analyse (\autoref{sec:kodi-tvheadend}) noch einmal aufgegriffen.
+
+Die speziell für Kodi konfigurierte PPA-Quelle und die Indizien der installierten Kodi-Softwarepakete weisen darauf hin, dass Kodi bewusst auf dem System installiert wurde. 
+
+Im nächsten Abschnitt soll analysiert werden, ob auch eine Nutzung stattgefunden hat.
+
+\subsection{Nutzung der Software Kodi}
+
+Die Software Kodi hält seine Konfigurations- und Logdateien im Unterverzeichnis \textit{.kodi} unterhalb des Heimatverzeichnis des Benutzers, mit dem die Software gestartet wurde. Nach Prüfung der Heimatverzeichnisse der zusätzlich im System angelegten Benutzer (siehe \autoref{sec:kodi-users}), wurde im Verzeichnis des Benutzers \textit{vagrant} das Kodi-Verzeichnis mit der Inode 73912 lokalisiert (siehe Kommando \autoref{cmd:kodi-homedir}).
+
+Das Verzeichnis \textit{/home/vagrant/.kodi/tmp} mit der Inode 76755 enthält die Kodi-Log-Dateien \textit{kodi.log} mit der Inode 76758 und \textit{kodi.old.log} mit der Inode 76757:
+
+\begin{cmd}[H]
+\begin{verbatim}
+d/d 76756:	temp
+r/r 76758:	kodi.log
+r/r 76757:	kodi.old.log
+\end{verbatim}
+\caption{fls -o 2048 kodi.raw 76755}
+\label{cmd:kodi-logs}
+\end{cmd}
+
+Kommando \autoref{cmd:kodi-logubuntu} zeigt Ausschnitte der Logdatei \textit{kodi.old.log}, die darauf hinweisen, dass diese Logdatei und damit die Ausführung von Kodi tatsächlich auf diesem PC ausgeführt wurde.
+
+\begin{cmd}[H]
+\begin{Verbatim}[fontsize=\tiny]
+19:44:22 T:140157499602880  NOTICE: Running on Ubuntu 14.04.2 LTS, kernel: Linux x86 64-bit version 3.13.0-48-generic
+19:44:22 T:140157499602880  NOTICE: Local hostname: vagrant-ubuntu-trusty-64
+\end{Verbatim}
+\caption{icat -o 2048 kodi.raw 76757 | grep -i ubuntu}
+\label{cmd:kodi-logubuntu}
+\end{cmd}
+
+Sowohl die in der Logdatei ausgegebenen Betriebssystemversion (vergleiche \autoref{sec:kodi-os}) als auch der Hostname (vergleiche \autoref{sec:kodi-hostname}) passen mit der ermittelten Konfiguration des Wohnzimmer-PCs überein.
+
+\subsubsection{Nutzungszeiten von Kodi}
+
+\autoref{table:kodi-logfileaccess} fasst die mittels Kommando \autoref{cmd:kodi-logfileaccess} festgestellten Dateisystem-Zugriffe auf die Log-Datei zusammen.
+
+\begin{table}[H]
+\begin{tabular}{ccc}
+\hline 
+Erstellung & Letzter Zugriff & Letzte Änderung \\ 
+\hline 
+04.05.2015 um 21:44:22 & 04.05.2015 um 21:44:22 & 04.05.2015 um 21:59:21 \\ 
+\hline 
+\end{tabular}
+\caption{Zeitpunkte der letzten Dateisystem-Zugriffe auf die Log-Datei kodi.old.log}
+\label{table:kodi-logfileaccess}
+\end{table}
+
+Die Erstellungszeit und die Zeit der letzten Änderung stimmt mit den Zeit-Stempeln am Anfang (siehe Kommando \autoref{cmd:kodi-loghead}) und Ende (siehe Kommando \autoref{cmd:kodi-logtail}) der Log-Datei überein.
+
+\begin{cmd}[H]
+\begin{Verbatim}[fontsize=\tiny]
+19:44:22 T:140157499602880  NOTICE: special://profile/ is mapped to: special://masterprofile/
+19:44:22 T:140157499602880  NOTICE: -----------------------------------------------------------------------
+19:44:22 T:140157499602880  NOTICE: Starting Kodi (14.2 Git:7cc53a9). Platform: Linux x86 64-bit
+\end{Verbatim}
+\caption{icat -o 2048 kodi.raw 76757 | head -n 3}
+\label{cmd:kodi-loghead}
+\end{cmd}
+
+\begin{cmd}[H]
+\begin{Verbatim}[fontsize=\tiny]
+19:59:21 T:140156182980352 WARNING: Previous line repeats 49 times.
+19:59:21 T:140156182980352  NOTICE: Thread BackgroundLoader start, auto delete: false
+19:59:21 T:140156676093696 WARNING: CRenderManager::WaitForBuffer - timeout waiting for buffer
+\end{Verbatim}
+\caption{icat -o 2048 kodi.raw 76757 | tail -n 3}
+\label{cmd:kodi-logtail}
+\end{cmd}
+
+Die Differenz von zwei Stunden kommt durch die Nutzung unterschiedlicher Zeitzonen des Kommandos \autoref{cmd:kodi-logfileaccess} mit CEST und UTC im Kodi-Logfile zu Stande.
+
+\subsubsection{Hinweise auf Auswahl von HD-TV-Sendern}
+
+Schließlich weist Kommando \autoref{cmd:kodi-loghd} erste Indizien in der Log-Datei auf, dass private HD-Sender (z.B. RTL HD) über die Software ausgewählt wurden.
+
+\begin{cmd}[H]
+\begin{Verbatim}[fontsize=\tiny]
+19:51:33 T:140157087635200  NOTICE: PVRManager - PerformChannelSwitch - switched to channel 'arte HD'
+19:52:07 T:140157087635200  NOTICE: PVRManager - PerformChannelSwitch - switched to channel 'ZDFinfo HD'
+19:53:38 T:140157087635200  NOTICE: PVRManager - PerformChannelSwitch - switched to channel 'WDR HD Köln'
+19:54:04 T:140157087635200  NOTICE: PVRManager - PerformChannelSwitch - switched to channel 'RTL HD'
+19:56:21 T:140157087635200  NOTICE: PVRManager - PerformChannelSwitch - switched to channel 'ProSieben MAXX HD'
+19:56:46 T:140157087635200  NOTICE: PVRManager - PerformChannelSwitch - switched to channel 'kabel eins HD'
+19:56:57 T:140157087635200  NOTICE: PVRManager - PerformChannelSwitch - switched to channel 'n-tv HD'
+19:57:12 T:140157087635200  NOTICE: PVRManager - PerformChannelSwitch - switched to channel 'TELE 5 HD'
+19:57:42 T:140157087635200  NOTICE: PVRManager - PerformChannelSwitch - switched to channel 'Pro7 FUN HD'
+19:58:02 T:140157087635200  NOTICE: PVRManager - PerformChannelSwitch - switched to channel 'RTL HD'
+\end{Verbatim}
+\caption{icat -o 2048 kodi.raw 76757 | grep -i HD}
+\label{cmd:kodi-loghd}
+\end{cmd}
+
+\subsection{Kodi-Anbindung an Tvheadend}
+\label{sec:kodi-tvheadend}
+
+Im Abschnitt \autoref{sec-kodi-tvheadend-hts} wurde festgestellt, dass eine zusätzliche Erweiterung zur Anbindung an Tvheadend auf dem Wohnzimmer-PC installiert wurde. Tvheadend ist ein TV Streaming Server und eine Aufnahmesoftware für Linux, die gängige TV-Übertragungsformate wie DVB-S, DVB-T, IPTV, etc. unterstützt. Die Kodi Erweiterung wird als PVR Addon bezeichnet. PVR\footnote{\href{http://kodi.wiki/view/PVR\_FAQ}{Kodi FAQ-Artikel über PVR: http://kodi.wiki/view/PVR\_FAQ}} steht für \textit{Personal video recorder} und erlaubt in Kodi u.a. die Live-Betrachtung und Aufnahme von TV-Sendern. Die Kommunikation zwischen Kodi, genauer dem Kodi PVR Tvheadend Addon und dem Tvheadend Server erfolgt über ein TCP/IP-Netzwerk.
+
+Die Anbindung von Kodi an Tvheadend erfolgt über die Addon-Konfiguration\footnote{\href{http://kodi.wiki/view/Tvheadend\_PVR\#Connecting\_Kodi\_to\_Tvheadend}{Kodi Wiki-Artikel über Anbindung von Kodi an Tvheadend: http://kodi.wiki/view/Tvheadend\_PVR}}, bei der die IP-Adresse, der TCP-Port, der Benutzername, das Passwort und weitere optionale Parameter des Tvheadend-Servers angegeben werden.
+
+Diese Konfiguration wurde in der Datei \textit{settings.xml} mit der Inode 76754 im Verzeichnis \textit{/home/vagrant/.kodi/userdata/addon\_data/pvr.hts} auf dem Wohnzimmer-PC sichergestellt. Das Kommando \autoref{cmd:kodi-tvheadend} zeigt den Inhalt dieser Datei.
+
+Die wichtigsten Einstellungen aus dieser Datei sind in \autoref{table-kodi-tvheadend} zusammengefasst.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ccccc}
+\hline 
+IP-Adresse & HTSP Port & HTTP Port & Benutzer & Passwort \\ 
+\hline 
+192.168.178.253 & 9982 & 9981 & admin & 12345 \\ 
+\hline 
+\end{tabular}
+\caption{Konfiguration des Kodi PVR Tvheadend Addons}
+\label{table-kodi-tvheadend}
+\end{table}
+
+Die IP-Adresse des Tvheadend-Servers lautet \textit{192.168.178.253}. Sie unterscheidet sich von der IP-Adresse des Wohnzimmer-PCs, ist jedoch noch innerhalb des privaten Klasse C-Netzwerks. Das deutet darauf hin, dass ein weiteres PC-System im Heimnetzwerk mit dieser IP-Adresse betrieben wird, auf dem der Tvheadend-Dienst gestartet ist.
+
+\section{Tvheadend-Server}
+
+\section{Smartcard-Server}
