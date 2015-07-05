@@ -537,6 +537,104 @@ File Created:	2015-05-04 21:45:13.127700738 (CEST)
 \label{cmd:oscam-bin}
 \end{cmd}
 
+\begin{cmd}[H]
+\begin{Verbatim}[fontsize=\tiny]
+-------------------------------------------------------------------------------
+>> OSCam <<  cardserver started at Mon May  4 19:45:13 2015
+-------------------------------------------------------------------------------
+2015/05/04 19:45:13        0 s >> OSCam <<  cardserver started, version 1.20-unstable_svn, build r0 (x86_64-linux-gnu-libusb)
+2015/05/04 19:45:13        0 s     (main) System name    = Linux
+2015/05/04 19:45:13        0 s     (main) Host name      = vagrant-ubuntu-trusty-64
+2015/05/04 19:45:13        0 s     (main) Release        = 3.13.0-48-generic
+2015/05/04 19:45:13        0 s     (main) Version        = #80-Ubuntu SMP Thu Mar 12 11:16:15 UTC 2015
+2015/05/04 19:45:13        0 s     (main) Machine        = x86_64
+2015/05/04 19:45:13        0 s     (main) creating pidfile /var/run/oscam.pid with pid 5504
+2015/05/04 19:45:13        0 s   (config) services reloaded: 0 services freed, 34 services loaded, rejected 0
+2015/05/04 19:45:13        0 s   (config) userdb reloaded: 1 accounts loaded, 0 expired, 1 disabled
+2015/05/04 19:45:13        0 s     (main) signal handling initialized
+2015/05/04 19:45:13        0 s      (net) newcamd: initialized (fd=5, port=31000)
+2015/05/04 19:45:13        0 s      (net) -> CAID: 1843 PROVID: 000000
+2015/05/04 19:45:13        0 s   (reader) HD02 [smartreader] creating thread for device 001:002
+2015/05/04 19:45:13        0 s     (stat) loadbalancer: can't read from file /tmp/.oscam/stat
+2015/05/04 19:45:13        0 s     (main) waiting for local card init
+2015/05/04 19:45:13 100008C0 h    (webif) webif: decompressed 160177 bytes back into 384088 bytes
+2015/05/04 19:45:13 100008C0 h    (webif) HTTP Server running. ip=0.0.0.0 port=8888
+2015/05/04 19:45:13   E4FB00 r   (reader) HD02 [smartreader] Reader initialized (device=001:002, detect=cd, mhz= AUTO, cardmhz=343)
+2015/05/04 19:45:14   E4FB00 r   (reader) HD02 [smartreader] card detected
+2015/05/04 19:45:18   E4FB00 r   (reader) HD02 [smartreader] ATR: 3F FF 95 00 FF 91 81 71 A0 47 00 44 4E 41 53 50 31 38 30 20 4D 65 72 30 30 30 28
+2015/05/04 19:45:18   E4FB00 r   (reader) HD02 [smartreader] Init card protocol T1, FI=9, F=512, D=16, N=255
+2015/05/04 19:45:18   E4FB00 r   (reader) HD02 [smartreader] Calculated work ETU is 5.99 us reader mhz = 534
+2015/05/04 19:45:18   E4FB00 r   (reader) HD02 [smartreader] Effective reader settings mhz =534 F= 512 D= 16 N=0 T=1 inv=1 parity=ODD
+2015/05/04 19:45:19   E4FB00 r   (reader) HD02 [smartreader] ATR Fsmax is 5 MHz, clocking card to ATR Fsmax for smartreader cardspeed of 5.34 MHz (specified in reader->mhz)
+2015/05/04 19:45:19   E4FB00 r   (reader) HD02 [smartreader] Card responded ok for ifsd request of 160
+2015/05/04 19:45:20   E4FB00 r   (reader) HD02 [smartreader] detect native nagra card
+2015/05/04 19:45:22   E4FB00 r   (reader) HD02 [smartreader] ready for requests
+2015/05/04 19:45:22   E4FB00 r   (reader) HD02 [smartreader] found card system nagra
+2015/05/04 19:45:22   E4FB00 r   (reader) HD02 [nagra] THIS WAS A SUCCESSFUL START ATTEMPT No  1 out of max alloted of 1
+2015/05/04 19:45:22   E4FB00 r   (reader) HD02 [nagra] ROM:    D N A S P 1 8 0
+2015/05/04 19:45:22   E4FB00 r   (reader) HD02 [nagra] REV:    M e r 0 0 0
+2015/05/04 19:45:22   E4FB00 r   (reader) HD02 [nagra] SER:    ############
+2015/05/04 19:45:22   E4FB00 r   (reader) HD02 [nagra] CAID:   1843
+2015/05/04 19:45:22   E4FB00 r   (reader) HD02 [nagra] Prv.ID: 00 00 34 11 (sysid)
+2015/05/04 19:45:22   E4FB00 r   (reader) HD02 [nagra] Prv.ID: 00 00 00 00
+2015/05/04 19:45:23   E4FB00 r   (reader) HD02 [nagra] IRD ID: ############
+2015/05/04 19:45:23   E4FB00 r   (reader) HD02 [nagra] active to: 2015/06/24 11:59
+2015/05/04 19:45:23   E4FB00 r   (reader) HD02 [nagra] -----------------------------------------
+2015/05/04 19:45:23   E4FB00 r   (reader) HD02 [nagra] |id  |tier    |valid from  |valid to    |
+2015/05/04 19:45:23   E4FB00 r   (reader) HD02 [nagra] +----+--------+------------+------------+
+2015/05/04 19:45:23   E4FB00 r   (reader) HD02 [nagra] |8011|0066    |2010/12/30  |2012/01/01  |
+2015/05/04 19:45:23   E4FB00 r   (reader) HD02 [nagra] |8011|0067    |2010/01/19  |2010/01/20  |
+2015/05/04 19:45:23   E4FB00 r   (reader) HD02 [nagra] |8011|0BB8    |2015/05/02  |2015/06/22  |
+2015/05/04 19:45:23   E4FB00 r   (reader) HD02 [nagra] -----------------------------------------
+2015/05/04 19:45:24        0 s     (main) init for all local cards done
+\end{Verbatim}
+\caption{icat -o 2048 oscam.raw 58246|head -n 49}
+\label{cmd:oscam-loghead}
+\end{cmd}
+
+\begin{cmd}[H]
+\begin{Verbatim}[fontsize=\tiny]
+2015/05/04 19:55:25   E53610 c  (newcamd) client connected to 31000 port
+2015/05/04 19:55:25   E53610 c   (client) encrypted newcamd:31000-client 192.168.178.253 granted (card, au=auto (1 reader))
+2015/05/04 19:55:25   E53610 c  (newcamd) user card authenticated successfully (Tvheadend)
+2015/05/04 19:55:25   E53610 c  (newcamd) AU enabled for user card on reader HD02
+2015/05/04 19:55:49   E53610 c      (ecm) card (1843&000000/0000/EF78/89:335D8D70FD829DB38B580BEDD731FC1D): found (416 ms) by HD02
+2015/05/04 19:55:50   E53610 c      (ecm) card (1843&000000/0000/EF78/89:E71FF7617ECC7EB2EE94FF09594A0A86): found (677 ms) by HD02
+2015/05/04 19:55:56   E53610 c      (ecm) card (1843&000000/0000/EF78/89:3B207BCE46DDCA09BDD92DD4D70D30B4): found (414 ms) by HD02
+2015/05/04 19:56:04   E53610 c      (ecm) card (1843&000000/0000/EF78/89:BF378AD0AC9AC4237FC857C41033876A): found (700 ms) by HD02
+2015/05/04 19:56:10   E53610 c      (ecm) card (1843&000000/0000/EF78/89:AFFCF8B4827D2D84EBBF3EA9D3B41D95): found (436 ms) by HD02
+2015/05/04 19:56:11   E53610 c      (ecm) card (1843&000000/0000/EF76/89:5929A8F50F97D0D26A9CDA694D8358B2): found (413 ms) by HD02
+2015/05/04 19:56:18   E53610 c      (ecm) card (1843&000000/0000/EF76/89:9894EB03392A805875666F484DBA1F83): found (435 ms) by HD02
+2015/05/04 19:56:38   E53610 c      (ecm) card (1843&000000/0000/1519/89:544503287B90C9F61CAB6D0EEB470256): found (411 ms) by HD02
+2015/05/04 19:56:41   E53610 c      (ecm) card (1843&000000/0000/1519/89:BF46BDB01D24B801FF1E582A485CD63B): found (421 ms) by HD02
+2015/05/04 19:56:48   E53610 c      (ecm) card (1843&000000/0000/1519/89:A3BE2297D81A281D909FD6EBE5555D72): found (413 ms) by HD02
+2015/05/04 19:56:55   E53610 c      (ecm) card (1843&000000/0000/1519/89:543876B5732176905A218797DE9EEA3C): found (405 ms) by HD02
+2015/05/04 19:57:02   E53610 c      (ecm) card (1843&000000/0000/1519/89:555856DA69E1EE257826AC4AC5DFB9F9): found (451 ms) by HD02
+2015/05/04 19:57:26   E53610 c      (ecm) card (1843&000000/0000/EF10/89:878528DBD7EBE5115D46785CFB09DC74): found (408 ms) by HD02
+2015/05/04 19:57:33   E53610 c      (ecm) card (1843&000000/0000/EF10/89:8248A95255D8BC32821E1331CBFBEAA9): found (411 ms) by HD02
+2015/05/04 19:57:33   E53610 c      (ecm) card (1843&000000/0000/EF10/89:8248A95255D8BC32821E1331CBFBEAA9): cache1 (0 ms) by HD02
+2015/05/04 19:57:33   E53610 c      (ecm) card (1843&000000/0000/EF10/89:8C3D7E5BF7EB5BD91F1CD72A1D53741E): not found (333 ms) by HD02
+2015/05/04 19:57:43   E53610 c      (ecm) card (1843&000000/0000/EF10/89:9782C23768BB4DEF44B1F5B903AC6930): found (393 ms) by HD02
+2015/05/04 19:57:53   E53610 c      (ecm) card (1843&000000/0000/EF10/89:8D55FC56F99C46524EE722EECE7903AC): found (398 ms) by HD02
+2015/05/04 19:58:03   E53610 c      (ecm) card (1843&000000/0000/EF10/89:23F3B0490D6F1917E00E09AC80F6AD87): found (411 ms) by HD02
+2015/05/04 19:58:13   E53610 c      (ecm) card (1843&000000/0000/EF10/89:A908883FB3F7DCBB4BD792B8BCE81C81): found (401 ms) by HD02
+2015/05/04 19:58:23   E53610 c      (ecm) card (1843&000000/0000/EF10/89:B58240F8BFF881FB16DF3FDA100751AA): found (438 ms) by HD02
+2015/05/04 19:58:33   E53610 c      (ecm) card (1843&000000/0000/EF10/89:9ADECFF20522D4D932FF1C8642758C3D): found (436 ms) by HD02
+2015/05/04 19:58:43   E53610 c      (ecm) card (1843&000000/0000/EF10/89:5FB3CC5C2D514B47BD09747C0803A633): found (441 ms) by HD02
+2015/05/04 20:01:45 100008C0 h    (webif) HTTP Server stopped
+2015/05/04 20:01:45        0 s   (dvbapi) dvbapi channelcache saved to /usr/local/etc/oscam.ccache
+2015/05/04 20:01:45        0 s (emmcache) saved 0 emmcache records to /tmp/.oscam/oscam.emmcache in 0 ms
+2015/05/04 20:01:45        0 s (emmcache) saved 0 emmstat records to /tmp/.oscam/oscam.emmstat in 0 ms
+2015/05/04 20:01:45        0 s   (client) killing client card
+2015/05/04 20:01:45        0 s   (reader) HD02 [nagra] Killing reader
+2015/05/04 20:01:45        0 s   (config) userdb 1 accounts freed
+2015/05/04 20:01:45        0 s   (config) readerdb 1 readers freed
+2015/05/04 20:01:45        0 s     (main) cardserver down
+\end{Verbatim}
+\caption{icat -o 2048 oscam.raw 58246|tail -n 36}
+\label{cmd:oscam-logtail}
+\end{cmd}
+
 \section{Screenshots}
 
 \begin{figure}[H]

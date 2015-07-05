@@ -301,7 +301,7 @@ tvheadend.raw: OK
 
 \subsection{Analyse des Abbilds}
 
-Analog zu \autoref{sec:kodi-rawanalysis} wurde mit Hilfe des Kommandos \autoref{cmd:tvheadend-mmls} die Partitionierung des Abbilds analysiert. Wie beim Abbild des Wohnzimmer-PCs enthält das Abbild des Tvheadend-Servers genau eine Linux-Partition, die bei Sektor 2048 beginnt.
+Analog zu \autoref{sec:kodi-rawanalysis} wurde mit Hilfe des Kommandos \autoref{cmd:tvheadend-mmls} die Partitionierung des Abbilds analysiert. Wie bei dem Abbild des Wohnzimmer-PCs enthält das Abbild des Tvheadend-Servers genau eine Linux-Partition, die bei Sektor 2048 beginnt.
 
 \subsection{Identifizierung des Betriebssystems}
 \label{sec:tvheadend-os}
@@ -418,6 +418,7 @@ r/r 79539:	heute-journal.mkv
 Der Unterordner \textit{.hts/} ist das Arbeitsverzeichnis des Tvheadend Dienstes, in dem Konfigurationsdateien und andere zur Laufzeit benötigte Dateien abgelegt werden. Die Videodateien mit der Dateiendung \textit{.mkv} weisen auf Videodateien hin, die von Tvheadend für eine Aufnahme eines TV-Senders erzeugt wurden. Eine detaillierte Analyse einer dieser Videodateien folgt im nächsten Abschnitt.
 
 \subsubsection{Videodatei mit Aufnahme eines HD-Senders}
+\label{sec:tvheadend-rtlhd}
 
 Die im Verzeichnis \textit{/home/hts} abgelegte Datei \textit{"Wer wird Millionär? Überraschungs-Special.mkv"} mit der Inode 79532 wird mit folgendem Kommando in eine Datei exportiert:
 
@@ -525,9 +526,23 @@ oscam.raw: OK
 
 \subsection{Analyse des Abbilds}
 
-Analog zu \autoref{sec:kodi-rawanalysis} wurde mit Hilfe des Kommandos \autoref{cmd:oscam-mmls} die Partitionierung des Abbilds analysiert. Wie beim Abbild des Wohnzimmer-PCs enthält das Abbild des Smartcard-Servers genau eine Linux-Partition, die bei Sektor 2048 beginnt.
+Analog zu \autoref{sec:kodi-rawanalysis} wurde mit Hilfe des Kommandos \autoref{cmd:oscam-mmls} die Partitionierung des Abbilds analysiert. Wie bei dem Abbild des Wohnzimmer-PCs enthält das Abbild des Smartcard-Servers genau eine Linux-Partition, die bei Sektor 2048 beginnt.
 
 \subsection{Konfiguration des Betriebssystems}
+
+\subsubsection{Hostname}
+\label{sec:oscam-hostname}
+
+Die Datei \textit{/etc/hostname} mit der Inode 473 gibt Auskunft über den Hostnamen des Systems:
+
+\begin{cmd}
+\begin{verbatim}
+vagrant-ubuntu-trusty-64
+\end{verbatim}
+\caption{icat -o 2048 oscam.raw 473}
+\end{cmd}
+
+Der Hostname lautet \textit{vagrant-ubuntu-trusty-64}.
 
 \subsubsection{Netzwerkkonfiguration}
 \label{sec:cardserver-network}
@@ -543,11 +558,11 @@ Die IP-Adresse des Smartcard-Servers lautet \textit{192.168.178.254}, welches de
 
 \subsection{Installierter Cardserver OSCam}
 
-OSCam\footnote{\href{http://www.streamboard.tv/wiki/OSCam/de/What\_is\_OSCam}{Infos zu OSCam: http://www.streamboard.tv/wiki/OSCam/de/What\_is\_OSCam}} ist ein Cardserver, der es ermöglicht über ein Computernetzwerk einen geteilten Zugriff auf Smartcards (card sharing) zu ermöglichen.
+OSCam\footnote{\href{http://www.streamboard.tv/wiki/OSCam/de/What\_is\_OSCam}{Informationen zu OSCam: http://www.streamboard.tv/wiki/OSCam/de/What\_is\_OSCam}} ist ein Cardserver, der es ermöglicht über ein Computernetzwerk einen geteilten Zugriff auf Smartcards (card sharing) zu ermöglichen.
 
 Auf dem analysierten System wurden mittels des Kommandos \autoref{cmd:oscam-tmp} im \textit{/tmp} Verzeichnis Spuren der manuellen Installation von OSCam (Verzeichnis \textit{/tmp/oscam-svn} mit kompilierten Quelldateien der OSCam Software) sichergestellt. 
 
-Im Verzeichnis \textit{/bin} liegt die ausführbare Programmdatei \textit{oscam} mit der Inode 58239 (Details siehe Kommando \autoref{cmd:oscam-bin}.
+Im Verzeichnis \textit{/bin} liegt die ausführbare Programmdatei \textit{oscam} mit der Inode 58239 (Details siehe Kommando \autoref{cmd:oscam-bin}).
 
 Die über das manuelle Kompilieren der OSCam Quelldateien generierte Programmdatei weist darauf hin, dass OSCam bewusst auf dem System installiert wurde. 
 
@@ -555,3 +570,38 @@ Im nächsten Abschnitt soll analysiert werden, ob auch eine Nutzung stattgefunde
 
 \subsection{Nutzung des Cardservers OSCam}
 
+Die Log-Datei des OSCam Servers wurde auf dem System in \textit{/var/log/oscam.log} sichergestellt. Die Ausgabe des Kommandos \autoref{cmd:oscam-loghead} liefert die ersten Zeilen der Log-Datei.
+
+Die folgende gekürzte Zeile aus dieser Ausgabe ist ein Indiz dafür, dass die Software auf dem analysierten System mit dem gleichen Hostnamen (siehe \autoref{sec:oscam-hostname}) ausgeführt wurde.
+
+\begin{verbatim}
+2015/05/04 19:45:13 [..] (main) Host name = vagrant-ubuntu-trusty-64
+\end{verbatim}
+
+Des Weiteren ist dem Log zu entnehmen, dass am protokollierten Datum ein Smartcard-Reader am System angebunden war, erfolgreich initialisiert und eine eingelegte Nagravision-Karte erkannte wurde. Die protokollierte \textit{CAID 1843} weist auf eine \textit{HD02\footnote{\href{https://www.zebradem.com/wiki/index.php?title=Smartcard\#HD.2B}{Information zu HD+-Karten: https://www.zebradem.com/wiki/index.php?title=Smartcard\#HD.2B}} HD+} Karte von Astra hin. Die entsprechenden gekürzten Einträge aus der Log-Datei sind folgend aufgeführt:
+
+\begin{verbatim}
+2015/05/04 19:45:13 [..] HD02 [smartreader] Reader initialized
+[..]
+2015/05/04 19:45:20 [..] HD02 [smartreader] detect native nagra card
+[..]
+2015/05/04 19:45:22 [..] HD02 [nagra] CAID: 1843
+\end{verbatim}
+
+Die Ausgabe des Kommando \autoref{cmd:oscam-logtail} liefert die letzten Zeilen aus der OSCam Log-Datei. Dort ist protokolliert, dass am 04.05.2015 um 19:55:25 Uhr sich die IP-Adresse des Tvheadend-Systems (192.167.178.253) erfolgreich verbunden hat und für den Zugriff auf die HD02 Karte freigeschaltet wurde. Das Datum und unter Berücksichtigung unterschiedlich angewandter Zeitzonen auch die Uhrzeit entsprechen den bisher festgestellten Zeitstempeln auf dem Tvheadend-Server. Die entsprechenden Einträge gekürzt aus der Log-Datei sind im Folgenden aufgeführt:
+
+\begin{verbatim}
+2015/05/04 19:55:25 [..] client connected to 31000 port
+2015/05/04 19:55:25 [..] encrypted newcamd:31000-client 192.168.178.253
+                         granted (card, au=auto (1 reader))
+2015/05/04 19:55:25 [..] user card authenticated successfully (Tvheadend)
+2015/05/04 19:55:25 [..] AU enabled for user card on reader HD02
+\end{verbatim}
+
+Schließlich protokolliert die Log-Datei erfolgreiche Lesezugriff auf die HD02 Karte am 04.05.2015 von 19:55:49 und 19:58:43 Uhr. Die Erstellung der in \autoref{sec:tvheadend-rtlhd} festgestellten Aufzeichnung des RTL-HD-Senders liegt in diesem Zeitfenster. Folgend die entsprechenden, gekürzten Einträge aus der Log-Datei:
+
+\begin{verbatim}
+2015/05/04 19:55:49 [..] (ecm) card [..] found (416 ms) by HD02
+[..]
+2015/05/04 19:58:43 [..] (ecm) card [..] found (441 ms) by HD02
+\end{verbatim}
