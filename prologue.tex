@@ -3,12 +3,105 @@
 
 \section{Auftrag}
 \label{sec:contract}
-\blindtext
+Am 14.05.2015 wurde von der Staatsanwaltschaft eine forensische Analyse beschlagnahmter Datenträger im Verdachtsfall auf sogenanntes Cardsharing durch den Tatverdächtigen Max Mustermann in Auftrag gegeben. Die Erwartungshaltung der Staatsanwaltschaft an die Analyse ist die Auffindung von Beweismitteln durch die das Vorliegen einer Straftat weiter bekräftigt oder widerlegt werden kann.
+
+\subsection{Zur Verfügung gestellte Dateien}
+\label{sec:contract-files}
+
+Bei der Übergabe des Untersuchungsauftrags wurde von der Staatsanwaltschaft das Festplatten-Abbild des Wohnzimmer-PCs des Tatverdächtigen zur Analyse zur Verfügung gestellt. Im weiteren Verlauf der Untersuchung dieses Abbilds wurden auftragsrelevante Verknüpfungen zu zwei weiteren PC-Serversystemen festgestellt. Die dazu sichergestellten Abbilder wurden bei der Staatsanwaltschaft angefragt und in den Untersuchungsauftrag aufgenommen.
+
+In \autoref{table:rawfilelist} sind alle Dateien aufgelistet, die zur Analyse übergeben wurden.
+
+\begin{table}[h]
+\begin{tabular}{llll}
+\toprule
+Eingang der Datei & Dateiname & Typ & PC-System \\ 
+\midrule
+14.05.2015 15:25 Uhr & kodi.raw & Festplatten-Abbild & Wohnzimmer-PC \\ 
+14.05.2015 15:25 Uhr & kodi.raw.md5 & MD5 Prüfsumme & Wohnzimmer-PC \\ 
+29.06.2015 12:20 Uhr & tvheadend.raw & Festplatten-Abbild & Tvheadend-Server \\ 
+29.06.2015 12:20 Uhr & tvheadend.raw.md5 & MD5 Prüfsumme & Tvheadend-Server \\ 
+03.07.2015 18:22 Uhr & oscam.raw & Festplatten-Abbild & Smartcard-Server \\ 
+03.07.2015 18:22 Uhr & oscam.raw.md5 & MD5 Prüfsumme & Smartcard-Server \\ 
+\bottomrule
+\end{tabular} 
+\caption{Liste der zur Verfügung gestellten Dateien.}
+\label{table:rawfilelist}
+\end{table}
 
 \section{Arbeitsumgebung}
 \label{sec:env}
-\blindtext
+
+\subsection{Untersuchungs-PC}
+Als Untersuchungs-PC kam ein Apple MacBook Pro (Retina, 15-inch, Late 2013) mit der  internen Bezeichnung \textit{MacBookPro11,3} zum Einsatz. Betrieben wurde das MacBook mit dem Betriebssystem Mac OS X Yosemite in der Version 10.10.4.
+
+Die beauftragte, forensische Analyse wurde nicht direkt auf dem Mac OS X Betriebssystem, sondern in einer Linux-VM durchgeführt. Als Virtualisierungssoftware kam die Software VMWare Fusion in der Version 7.1.2 zum Einsatz. Das VMWare Fusion Festplatten-Image wurde verschlüsselt auf einer USB-Festplatte abgelegt.
+
+\subsection{Untersuchungs-VM}
+
+In der Linux-VM kam als Betriebssystem Ubuntu Linux Server in der 64-bit Version 14.04.2 LTS zum Einsatz, die in der Minimal-Version ohne graphische Oberfläche installiert wurde. 
+
+Für den Betrieb der VM oder der eingesetzten Analyse-Software werden keine speziellen Einstellungen in VMWare Fusion benötigt.
+
+\subsection{Eingesetzte Software}
+
+Als Analyse-Softwarepaket wurde Sleuth Kit\footnote{\href{http://www.sleuthkit.org/sleuthkit/}{Homepage von Sleuth Kit: http://www.sleuthkit.org/sleuthkit/}} in der Version 4.1.3 eingesetzt. Zudem kamen weitere Kommandozeilentools von Linux zum Einsatz, die standardmäßig mit der Linux Distribution installiert sind. In \autoref{table:prologue-tools-vm} sind alle relevanten Softwarekomponenten aufgeführt.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ccc}
+\hline 
+Ursprung & Tools & Version \\ 
+\hline 
+Ubuntu Basis-Installation & GNU coreutils: md5sum, tail, head & 8.21 \\ 
+\hline 
+Ubuntu Basis-Installation & GNU grep & 2.16 \\ 
+\hline 
+Ubuntu Basis-Installation & file & 5.14 \\ 
+\hline 
+Sleuthkit manuell kompiliert & mmls, fls, icat, istat & 4.1.3 \\ 
+\hline 
+\end{tabular} 
+\caption{Auflistung aller eingesetzter Tools innerhalb der Linux-VM}
+\label{table:prologue-tools-vm}
+\end{table}
+
+Für das Abspielen der Videodatei in \autoref{sec:tvheadend-rtlhd} wurde der universelle Video-Player VLC\footnote{\href{http://www.vlc.de/vlc\_download\_mac\_os\_x.php}{Download-Seite des VLC Players für Mac OS X: http://www.vlc.de/vlc\_download\_mac\_os\_x.php}} unter Mac OS X in der Version 2.2.1 verwendet.
 
 \section{Beweiswahrungskette}
 \label{sec:cod}
-\blindtext
+
+Direkt nach Erhalt eines Festplattenabbilds und der MD5-Prüfdatei, wurde mittels der MD5-Summe die Integrität des Abbilds überprüft (Zeitpunkte des Erhalts siehe \autoref{sec:contract-files}). Zur zentralen Aufbewahrung der MD5-Prüfsummen kam eine interne, passwortgeschützte Websoftware zum Einsatz, die die Prüfsummen revisionssicher ablegt. Das Festplattenabbild wurde auf einem nur einmal beschreibbaren WORM\footnote{\href{https://de.wikipedia.org/wiki/WORM}{Wikipedia-Artikel über WORM: https://de.wikipedia.org/wiki/WORM}}-Datenträger verschlüsselt archiviert. Abschließend erfolgte eine erneute Prüfung der MD5-Summe zur Sicherstellung der integeren Archivierung auf dem Datenträger und die Aufbewahrung des Datenträgers in einem Tresor.
+
+Für den Auftrag wurde eine eigene Untersuchungs-VM (siehe \autoref{sec:env}) angelegt und auf einer mit FileVault-2\footnote{\href{https://de.wikipedia.org/wiki/FileVault}{Wikipedia-Seite zu FileVault: https://de.wikipedia.org/wiki/FileVault}} verschlüsselten USB-Festplatte abgelegt. Die zu untersuchenden Festplattenabbilder sind auch auf dieser USB-Festplatte gespeichert worden.
+
+Bei Beginn einer Analyse-Sitzung wurde die USB-Festplatte mit dem Untersuchungs-PC verbunden und mittels Eingabe eines Passworts entsperrt bzw. entschlüsselt. Es folgte  mittels der in der Websoftware hinterlegten MD5-Summe die Prüfung der Integrität des zu untersuchenden Festplattenabbilds (siehe z.B. \autoref{sec:kodi-integrity}). Nach Beendigung der Sitzung wurde eine erneute MD5-Prüfung durchgeführt, die USB-Festplatte getrennt und in einem zweiten Tresor verwahrt.
+
+Die Herausgabe der Speichermedien aus den Tresoren werden durch Personal durchgeführt und protokolliert, die nicht mit den Untersuchungsaufträgen involviert sind. Dieser Untersuchungsauftrag trägt die interne Fall-Nummer \textit{853734}. Mit der Endung \textit{T} werden die verwahrten Backup-Bänder und mit der Endung \textit{U} die USB-Festplatten, sowie mit einer nachfolgenden Nummerierung identifiziert. Die \autoref{table:exhibit-accesslist} stellt die proktollierten Zugriffe auf die Asservate (Bänder und USB-Festplatten) dar.
+
+\begin{table}
+\begin{tabular}{cccccc}
+\hline 
+Datum & Uhrzeit & Asservat & Zugangstyp & Zugriff durch & Protokolliert durch \\ 
+\hline 
+14.05.2015 & 16:35 Uhr & 853734-T1 & Ablage & Kendinibilir & Mustermann \\ 
+14.05.2015 & 16:35 Uhr & 853734-U1 & Ablage & Kendinibilir & Mustermann \\ 
+15.05.2015 & 09:10 Uhr & 853734-U1 & Entnahme & Kendinibilir & Mustermann \\
+15.05.2015 & 17:20 Uhr & 853734-U1 & Ablage & Kendinibilir & Mustermann \\
+18.05.2015 & 09:15 Uhr & 853734-U1 & Entnahme & Kendinibilir & Mustermann \\
+18.05.2015 & 13:40 Uhr & 853734-U1 & Ablage & Kendinibilir & Mustermann \\
+29.06.2015 & 12:30 Uhr & 853734-U1 & Entnahme & Kendinibilir & Mustermann \\
+29.06.2015 & 17:50 Uhr & 853734-T2 & Ablage & Kendinibilir & Mustermann \\ 
+29.06.2015 & 17:50 Uhr & 853734-U1 & Ablage & Kendinibilir & Mustermann \\ 
+30.06.2015 & 10:50 Uhr & 853734-U1 & Entnahme & Kendinibilir & Mustermann \\ 
+30.06.2015 & 14:50 Uhr & 853734-U1 & Ablage & Kendinibilir & Mustermann \\ 
+03.07.2015 & 18:30 Uhr & 853734-U1 & Entnahme & Kendinibilir & Mustermann \\
+03.07.2015 & 19:20 Uhr & 853734-T3 & Ablage & Kendinibilir & Mustermann \\ 
+03.07.2015 & 22:30 Uhr & 853734-U1 & Ablage & Kendinibilir & Mustermann \\
+\hline 
+\end{tabular}
+\caption{Zugangsliste zu Asservaten}
+\label{table:exhibit-accesslist}
+\end{table}
+
+Die Büroräume, in denen sich die beiden Tresore befinden, sind zusätzlich verschlossen. Ein zentrales Gebäude-Alarmsystem und der 24/7 Sicherheitsdienst stellen insbesondere außerhalb der Büroöffnungszeiten den Schutz vor unberechtigten Zugriff oder Manipulation der Asservate sicher.

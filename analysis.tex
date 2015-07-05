@@ -1,34 +1,14 @@
 \chapter{Technische Analyse}
 \label{chap:analysis}
 
-Bei der Übergabe des Untersuchungsauftrags wurde von der Staatsanwaltschaft  das Festplatten-Abbild des Wohnzimmer-PCs des Tatverdächtigen zur Analyse zur Verfügung gestellt. Im weiteren Verlauf der Untersuchung dieses Abbild wurden auftragsrelevante Verknüpfungen zu zwei weiteren PC-Serversystemen festgestellt. Die dazu sichergestellten Abbilder wurden bei der  Staatsanwaltschaft angefragt und in den Untersuchungsauftrag aufgenommen.
-
-In \autoref{table:rawfilelist} sind alle Dateien aufgelistet, die zur Analyse übergeben wurden.
-
-\begin{table}[h]
-\begin{tabular}{llll}
-\toprule
-Eingang der Datei & Dateiname & Typ & PC-System \\ 
-\midrule
-14.05.2015 15:25 Uhr & kodi.raw & Festplatten-Abbild & Wohnzimmer-PC \\ 
-14.05.2015 15:25 Uhr & kodi.raw.md5 & MD5 Prüfsumme & Wohnzimmer-PC \\ 
-29.06.2015 12:20 Uhr & tvheadend.raw & Festplatten-Abbild & Tvheadend-Server \\ 
-29.06.2015 12:20 Uhr & tvheadend.raw.md5 & MD5 Prüfsumme & Tvheadend-Server \\ 
-03.07.2015 18:22 Uhr & oscam.raw & Festplatten-Abbild & Smartcard-Server \\ 
-03.07.2015 18:22 Uhr & oscam.raw.md5 & MD5 Prüfsumme & Smartcard-Server \\ 
-\bottomrule
-\end{tabular} 
-\caption{Liste der zur Verfügung gestellten Dateien.}
-\label{table:rawfilelist}
-\end{table}
-
-Die folgenden Kapitel beschreiben die technische Analyse der Abbilder dieser drei PC-Systeme.
+Die folgenden Kapitel beschreiben die technische Analyse der drei zur Verfügung gestellten Abbilder von PC-Systemen des Tatverdächtigen (siehe \autoref{sec:contract-files}).
 
 \section{Wohnzimmer-PC}
 
 \subsection{Sicherstellung der Datenintegrität}
+\label{sec:kodi-integrity}
 
-Zur Sicherstellung der Datenintegrität bei der Übermittlung des Abbilds wurde folgender MD5-Hash in der Datei \textit{kodi.raw.md5} zur Verfügung gestellt:
+Zur Sicherstellung der Datenintegrität des Abbilds wurde folgender MD5-Hash in der Datei \textit{kodi.raw.md5} zur Verfügung gestellt:
 
 \begin{verbatim}
 4f354d21e9e3959655bfd1cde1fd32df  kodi.raw
@@ -284,7 +264,7 @@ Die IP-Adresse des Tvheadend-Servers lautet \textit{192.168.178.253}. Sie unters
 
 \subsection{Sicherstellung der Datenintegrität}
 
-Zur Sicherstellung der Datenintegrität bei der Übermittlung des Abbilds wurde folgender MD5-Hash in der Datei \textit{tvheadend.raw.md5} zur Verfügung gestellt:
+Zur Sicherstellung der Datenintegrität des Abbilds wurde folgender MD5-Hash in der Datei \textit{tvheadend.raw.md5} zur Verfügung gestellt:
 
 \begin{verbatim}
 3ac92767e688451bde8ca4dd8b82b5b5  tvheadend.raw
@@ -509,7 +489,7 @@ Hostname & Port & Username & Passwort & Enabled \\
 
 \subsection{Sicherstellung der Datenintegrität}
 
-Zur Sicherstellung der Datenintegrität bei der Übermittlung des Abbilds wurde folgender MD5-Hash in der Datei \textit{oscam.raw.md5} zur Verfügung gestellt:
+Zur Sicherstellung der Datenintegrität des Abbilds wurde folgender MD5-Hash in der Datei \textit{oscam.raw.md5} zur Verfügung gestellt:
 
 \begin{verbatim}
 1abca0e041569acb38dc776fe2d9fde9  oscam.raw
