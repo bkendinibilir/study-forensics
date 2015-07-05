@@ -415,6 +415,8 @@ r/r 79539:	heute-journal.mkv
 \label{cmd:tvheadend-homedir}
 \end{cmd}
 
+Der Unterordner \textit{.hts/} ist das Arbeitsverzeichnis des Tvheadend Dienstes, in dem Konfigurationsdateien und andere zur Laufzeit benötigte Dateien abgelegt werden. Die Videodateien mit der Dateiendung \textit{.mkv} weisen auf Videodateien hin, die von Tvheadend für eine Aufnahme eines TV-Senders erzeugt wurden. Eine detaillierte Analyse einer dieser Videodateien folgt im nächsten Abschnitt.
+
 \subsubsection{Videodatei mit Aufnahme eines HD-Senders}
 
 Die im Verzeichnis \textit{/home/hts} abgelegte Datei \textit{"Wer wird Millionär? Überraschungs-Special.mkv"} mit der Inode 79532 wird mit folgendem Kommando in eine Datei exportiert:
@@ -431,7 +433,7 @@ Die MD5-Prüfsumme der Datei lautet:
 
 Spielt man die Videodatei mit dem Videoplayer VLC ab, erscheint ein Ausschnitt aus einer \textit{"Wer wird 	Millionär?"}\footnote{\href{https://de.wikipedia.org/wiki/Wer\_wird\_Million\%C3\%A4r}{Wikipedia-Seite über die Quizshow: https://de.wikipedia.org/wiki/Wer\_wird\_Million\%C3\%A4r}}-TV-Folge. \autoref{fig:tvheadend-rtlhd} zeigt einen Screenshot aus der Videowiedergabe. Das Bild ist stark gestört, jedoch ist links oben deutlich das RTLHD-Logo zu erkennen.
 
-Die über Kommando \autoref{cmd:tvheadend-rtlhdaccess} ermittelten Zugriffszeiten auf die Videodatei \textit{"Wer wird Millionär? Überraschungs-Special.mkv"} ist in \autoref{table:kodi-rtlhdaccess} zusammengefasst.
+Die über Kommando \autoref{cmd:tvheadend-rtlhdaccess} ermittelten Zugriffszeiten auf die Videodatei \textit{"Wer wird Millionär? Überraschungs-Special.mkv"} ist in \autoref{table:tvheadend-rtlhdaccess} zusammengefasst.
 
 \begin{table}[H]
 \begin{tabular}{ccc}
@@ -442,12 +444,65 @@ Erstellung & Letzter Zugriff & Letzte Änderung \\
 \hline 
 \end{tabular}
 \caption{Zeitpunkte der letzten Dateisystem-Zugriffe auf die Video-Datei \textit{"Wer wird Millionär? Überraschungs-Special.mkv"}}
-\label{table:kodi-rtlhdaccess}
+\label{table:tvheadend-rtlhdaccess}
 \end{table}
 
-Die Erstellungszeit und die Zeit der letzten Änderung der Video-Datei fällt in das Zeitfenster, in dem Kodi auf dem Wohnzimmer-PC ausgeführt wurde (siehe \autoref{table:kodi-logfileaccess}). 
+Die Erstellungszeit und die Zeit der letzten Änderung der Video-Datei fällt in das Zeitfenster, in dem Kodi auf dem Wohnzimmer-PC ausgeführt wurde (siehe \autoref{table:kodi-logfileaccess}).
 
-Die Online-TV-Recorder-Webseite\footnote{\href{http://www.onlinetvrecorder.com/v2/?go=download\&epg\_id=10438936}{Eintrag bei Online-TV-Recorder: http://www.onlinetvrecorder.com/v2/?go=download\&epg\_id=10438936}} bestätigt die Ausstrahlung einer \textit{"Wer wird Millionaer UEberraschungs Special"}-Folge am 04.05.2015 von 20:15 bis 22:15 Uhr CEST.
+Abschließend bestätigt die Online-TV-Recorder-Webseite\footnote{\href{http://www.onlinetvrecorder.com/v2/?go=download\&epg\_id=10438936}{Eintrag bei Online-TV-Recorder: http://www.onlinetvrecorder.com/v2/?go=download\&epg\_id=10438936}} die Ausstrahlung einer \textit{"Wer wird Millionaer UEberraschungs Special"}-Folge am 04.05.2015 von 20:15 bis 22:15 Uhr CEST.
+
+\subsection{Interaktion zwischen Wohnzimmer-PC und Tvheadend}
+
+Kommando \autoref{cmd:tvheadend-subscription} bestimmt aus der Logdatei \textit{/var/log/syslog} auf dem Tvheadend-Server die Zeitpunkte einer Anmeldung eines TV-Senders (Tvheadend subscribe), die durch Kodi auf dem Wohnzimmer-PC ausgelöst wurden (Kodi channel switch). In der \autoref{table:tvheadend-logcompare} werden diese Einträge mit den aus Kommando \autoref{cmd:kodi-loghd} ermittelten Log-Einträge auf dem Wohnzimmer-PC abgeglichen.
+
+\begin{table}[H]
+\begin{tabular}{ccccc}
+\hline 
+TV-Sender & Kodi channel switch & Dauer & Tvheadend subscribe & Dauer \\ 
+\hline 
+ProSieben MAXX HD & 19:56:21 & - & 19:55:46 & - \\ 
+\hline 
+kabel eins HD & 19:56:46 & 25s & 19:56:10 & 24s \\ 
+\hline 
+n-tv HD & 19:56:57 & 11s & 19:56:21 & 11s \\ 
+\hline 
+TELE 5 HD & 19:57:12 & 15s & 19:56:35 & 14s \\ 
+\hline 
+Pro7 FUN HD & 19:57:42 & 30s & 19:57:04 & 29s \\ 
+\hline 
+RTL HD & 19:58:02 & 20s & 19:57:23 & 19s \\ 
+\hline 
+\end{tabular}
+\caption{Gegenüberstellung der Log-Einträge auf dem Wohnzimmer-PC (kodi) und Tvheadend}
+\label{table:tvheadend-logcompare}
+\end{table}
+
+Die zeitliche Abfolge der Kanalwechsel als auch die Verweildauer auf den TV-Sendern stimmt überein. Es besteht also eine starke Bindung zwischen den auf den Systemen sichergestellten Spuren. Die leicht unterschiedlichen Zeitstempel können durch unterschiedliche Systemzeiten auf den beiden PC-Systemen verursacht sein.
+
+\subsection{Tvheadend-Anbindung an Smartcard-Server}
+
+Die mittels Kommando \autoref{cmd:tvheadend-cwclog} ermittelten Log-Einträge aus \textit{/var/log/syslog} auf dem Tvheadend-Server weisen darauf hin, dass ein weiteres Serversystem im gleichen Heimnetzwerk bei der Wiedergabe der TV-Sender involviert ist. Es wird eine Verbindung zu der IP-Adresse  \textit{192.168.178.254} mit dem Port 31000 aufgebaut. Folgender Log-Auszug protokolliert die Verbindung zu einer NagraVision-Karte über diese IP-Adresse:
+
+\begin{Verbatim}[fontsize=\tiny]
+May  4 19:55:25 vagrant-ubuntu-trusty-64 tvheadend[834]: cwc: 192.168.178.254:31000: Connected as user 0x01 to a NagraVision-card [0x1843 : 00.00.00.00.48.d3.41.cd] with 3 providers
+\end{Verbatim}
+
+NagraVision ist ein Zugangsberichtigungssystem, welches in einer nachgebesserten Version u.a. für dem Empfang von HD+ TV-Sender eingesetzt wird\footnote{\href{https://de.wikipedia.org/wiki/HD\%2B\#Technik}{Wikipedia-Artikel über HD+ Technik: https://de.wikipedia.org/wiki/HD\%2B\#Technik}}. Die kryptographischen Schlüssel für die Zugangsberechtigung liegen auf einer Smartcard.
+
+Die über Kommando \autoref{cmd:tvheadend-cwc} ermittelte CWC-Konfiguration\footnote{\href{https://tvheadend.org/projects/tvheadend/wiki/CWC\_configuration}{Hersteller Dokumentation zu CWC: https://tvheadend.org/projects/tvheadend/wiki/CWC\_configuration}} bestätigen den Verdacht auf Nutzung eines im Heimnetzwerk betriebenen Smartcard-Servers. Die extrahierte CWC-Konfigurationsdatei lautet \textit{/home/hts/.hts/tvheadend/cwc/1} und hat die Inode 70465. Die \autoref{table:tvheadend-cwc} fasst die wichtigsten Parameter der CWC-Konfiguration zusammen.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ccccc}
+\hline 
+Hostname & Port & Username & Passwort & Enabled \\ 
+\hline 
+192.168.178.254 & 31000 & card & share & 1 \\ 
+\hline 
+\end{tabular}
+\caption{Wichtigste Parameter der CWC-Konfiguration auf Tvheadend-Server}
+\label{table:tvheadend-cwc}
+\end{table}
 
 \section{Smartcard-Server}
 
@@ -471,3 +526,32 @@ oscam.raw: OK
 \subsection{Analyse des Abbilds}
 
 Analog zu \autoref{sec:kodi-rawanalysis} wurde mit Hilfe des Kommandos \autoref{cmd:oscam-mmls} die Partitionierung des Abbilds analysiert. Wie beim Abbild des Wohnzimmer-PCs enthält das Abbild des Smartcard-Servers genau eine Linux-Partition, die bei Sektor 2048 beginnt.
+
+\subsection{Konfiguration des Betriebssystems}
+
+\subsubsection{Netzwerkkonfiguration}
+\label{sec:cardserver-network}
+
+In Debian/Ubuntu-Betriebssystemen wird das Netzwerk in der Datei \textit{/etc/network/interfaces} konfiguriert. Die relevanten Zeilen daraus lauten (vollständige Datei siehe Kommando \autoref{cmd:oscam-interfaces}):
+
+\begin{verbatim}
+address 192.168.178.254
+netmask 255.255.255.0
+\end{verbatim}
+
+Die IP-Adresse des Smartcard-Servers lautet \textit{192.168.178.254}, welches dem selben privaten \mbox{Klasse-C} Netzwerk 192.168.178.200/24 zugeordnet werden kann, in dem auch der Wohnzimmer-PC und der Tvheadend-Server betrieben wird. Die IP-Adresse stimmt mit der in der Tvheadend CWC-Konfiguration hinterlegten IP-Adresse überein (siehe \autoref{table:tvheadend-cwc}).
+
+\subsection{Installierter Cardserver OSCam}
+
+OSCam\footnote{\href{http://www.streamboard.tv/wiki/OSCam/de/What\_is\_OSCam}{Infos zu OSCam: http://www.streamboard.tv/wiki/OSCam/de/What\_is\_OSCam}} ist ein Cardserver, der es ermöglicht über ein Computernetzwerk einen geteilten Zugriff auf Smartcards (card sharing) zu ermöglichen.
+
+Auf dem analysierten System wurden mittels des Kommandos \autoref{cmd:oscam-tmp} im \textit{/tmp} Verzeichnis Spuren der manuellen Installation von OSCam (Verzeichnis \textit{/tmp/oscam-svn} mit kompilierten Quelldateien der OSCam Software) sichergestellt. 
+
+Im Verzeichnis \textit{/bin} liegt die ausführbare Programmdatei \textit{oscam} mit der Inode 58239 (Details siehe Kommando \autoref{cmd:oscam-bin}.
+
+Die über das manuelle Kompilieren der OSCam Quelldateien generierte Programmdatei weist darauf hin, dass OSCam bewusst auf dem System installiert wurde. 
+
+Im nächsten Abschnitt soll analysiert werden, ob auch eine Nutzung stattgefunden hat.
+
+\subsection{Nutzung des Cardservers OSCam}
+
