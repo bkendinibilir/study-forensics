@@ -462,10 +462,12 @@ Die zeitliche Abfolge der Kanalwechsel als auch die Verweildauer auf den TV-Send
 
 \subsection{Tvheadend-Anbindung an Smartcard-Server}
 
-Die mittels Kommando \autoref{cmd:tvheadend-cwclog} ermittelten Log-Einträge aus \textit{/var/log/syslog} auf dem Tvheadend-Server weisen darauf hin, dass ein weiteres Serversystem im gleichen Heimnetzwerk bei der Wiedergabe der TV-Sender involviert ist. Es wird eine Verbindung zu der IP-Adresse  \textit{192.168.178.254} mit dem Port 31000 aufgebaut. Folgender Log-Auszug protokolliert die Verbindung zu einer NagraVision-Karte über diese IP-Adresse:
+Die mittels Kommando \autoref{cmd:tvheadend-cwclog} ermittelten Log-Einträge aus \textit{/var/log/syslog} auf dem Tvheadend-Server weisen darauf hin, dass ein weiteres Serversystem im gleichen Heimnetzwerk bei der Wiedergabe der TV-Sender involviert ist. Es wird eine Verbindung zu der IP-Adresse \textit{192.168.178.254} mit dem Port 31000 aufgebaut. Folgender Log-Auszug protokolliert die Verbindung zu einer NagraVision-Karte über diese IP-Adresse:
 
-\begin{Verbatim}[fontsize=\tiny]
-May  4 19:55:25 vagrant-ubuntu-trusty-64 tvheadend[834]: cwc: 192.168.178.254:31000: Connected as user 0x01 to a NagraVision-card [0x1843 : 00.00.00.00.48.d3.41.cd] with 3 providers
+\begin{Verbatim}
+May  4 19:55:25 vagrant-ubuntu-trusty-64 tvheadend[834]: 
+  cwc: 192.168.178.254:31000: Connected as user 0x01 to a NagraVision-card
+  [0x1843 : 00.00.00.00.48.d3.41.cd] with 3 providers
 \end{Verbatim}
 
 NagraVision ist ein Zugangsberichtigungssystem, welches in einer nachgebesserten Version u.a. für dem Empfang von HD+ TV-Sender eingesetzt wird\footnote{\href{https://de.wikipedia.org/wiki/HD\%2B\#Technik}{Wikipedia-Artikel über HD+ Technik: https://de.wikipedia.org/wiki/HD\%2B\#Technik}}. Die kryptographischen Schlüssel für die Zugangsberechtigung liegen auf einer Smartcard.
