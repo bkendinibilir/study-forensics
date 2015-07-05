@@ -21,7 +21,7 @@ Insgesamt wurden drei beschlagnahmte PC-Systeme des Tatverdächtigen Max Musterm
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.5]{system-overview.png} 
+\includegraphics[scale=0.45]{system-overview.png} 
 \caption{Überblick der analysierten Systeme und Beziehungen zueinander}
 \label{fig:summary-overview}
 \end{figure}
@@ -56,9 +56,9 @@ Zur Belegung für die in \autoref{sec:summary-overview} dargestellten Umgehung d
 
 \begin{table}
 \begin{tabular}{p{0.3cm}p{3cm}p{9cm}p{1.1cm}}
-\hline 
+\toprule
 Nr. & System & Spur & Kapitel \\ 
-\hline
+\toprule
 1. & Wohnzimmer-PC & Installiertes Softwarepakete des Media-Centers Kodi & 3.1.5 \\ 
 \hline
 2. & Wohnzimmer-PC & Installiertes Softwarepaket der Kodi Erweiterung zur Anbindung an Tvheadend & 3.1.5 \\ 
@@ -73,7 +73,7 @@ Nr. & System & Spur & Kapitel \\
 \hline
 7. & Tvheadend-Server & Videodatei mit kurzer Aufnahme der \textit{Wer wird Millionär?}-Spezialfolge auf dem RTL HD+ Sender am 04.05.2015 um 21:57 Uhr, siehe \autoref{fig:tvheadend-rtlhd} & 3.2.6 \\ 
 \hline
-8. & Tvheadend-Server & Übereinstimmung der Erstellungszeit der Aufnahme in Spur 7 mit dem1 protokollierten Nutzungszeitfenster von Kodi in Spur 3 & 3.2.6 \\ 
+8. & Tvheadend-Server & Übereinstimmung der Erstellungszeit der Aufnahme in Spur 7 mit dem protokollierten Nutzungszeitfenster von Kodi in Spur 3 & 3.2.6 \\ 
 \hline
 9. & Tvheadend-Server & Übereinstimmung der zeitlichen Abfolge der Kanalwechsel und Verweildauer auf den HD+ Sendern aus Spur 4 und der protokollierten Wiedergabe der Sender auf dem Tvheadend-Server & 3.2.7 \\ 
 \hline
@@ -89,11 +89,11 @@ Nr. & System & Spur & Kapitel \\
 \hline
 15. & Smartcard-Server & Protokollierte Nutzung eines Kartenlesegeräts mit eingelegter HD+ Smartcard am 04.05.2015 um 19:45 Uhr & 3.3.5 \\
 \hline
-16. & Smartcard-Server & Protokollierte Verbindung der Software Tvheadend mit dem Smartcard Server am 04.05.2015 um 19:55 Uhr & 3.3.5 \\
+16. & Smartcard-Server & Protokollierte Verbindung von Tvheadend mit dem Smartcard Server am 04.05.2015 um 19:55 Uhr & 3.3.5 \\
 \hline
 17. & Smartcard-Server & Protokollierte Lesezugriffe auf die HD+ Smartcard im Zeitfenster der Aufnahme in Spur 7 am 04.05.2015 um 19:55 bis 19:58 Uhr & 3.3.5 \\
-\hline
+ \bottomrule
 \end{tabular}
-\caption{Auflistung der aufgefundenen Spuren auf den untersuchten Systemen}
+\caption{Liste der aufgefundenen Spuren auf den untersuchten Systemen}
 \label{table:summary-traces}
 \end{table}

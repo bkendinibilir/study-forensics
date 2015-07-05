@@ -6,10 +6,10 @@
 \section{Beweiswahrungskette}
 
 \begin{table}[H]
-\begin{tabular}{cccccc}
-\hline 
+\begin{tabular}{llllll}
+\toprule
 Datum & Uhrzeit & Asservat & Zugangstyp & Zugriff durch & Protokolliert durch \\ 
-\hline 
+\midrule
 14.05.2015 & 16:35 Uhr & 853734-T1 & Ablage & Kendinibilir & Mustermann \\ 
 14.05.2015 & 16:35 Uhr & 853734-U1 & Ablage & Kendinibilir & Mustermann \\ 
 15.05.2015 & 09:10 Uhr & 853734-U1 & Entnahme & Kendinibilir & Mustermann \\
@@ -24,17 +24,15 @@ Datum & Uhrzeit & Asservat & Zugangstyp & Zugriff durch & Protokolliert durch \\
 03.07.2015 & 18:30 Uhr & 853734-U1 & Entnahme & Kendinibilir & Mustermann \\
 03.07.2015 & 19:20 Uhr & 853734-T3 & Ablage & Kendinibilir & Mustermann \\ 
 03.07.2015 & 22:30 Uhr & 853734-U1 & Ablage & Kendinibilir & Mustermann \\
-\hline 
+\bottomrule
 \end{tabular}
-\caption{Zugangsliste zu Asservaten des Untersuchungsauftrags 853734}
+\caption{Zugangsliste zu den Asservaten des Untersuchungsauftrags 853734}
 \label{table:exhibit-accesslist}
 \end{table}
 
 \section{Ausgabe von Analyse-Tool Kommandos}
 
 \subsection{Wohnzimmer-PC}
-
-\subsubsection{Abbild}
 
 \begin{cmd}[H]
 \begin{verbatim}
@@ -51,8 +49,6 @@ Units are in 512-byte sectors
 \caption{mmls kodi.raw}
 \label{cmd:kodi-mmls}
 \end{cmd}
-
-\subsubsection{Betriebssystem}
 
 \begin{cmd}[H]
 \begin{verbatim}
@@ -95,8 +91,6 @@ DISTRIB_DESCRIPTION="Ubuntu 14.04.2 LTS"
 \caption{icat -o 2048 kodi.raw 481}
 \label{cmd:kodi-lsb}
 \end{cmd}
-
-\subsubsection{Grundkonfiguration}
 
 \begin{cmd}[H]
 \begin{verbatim}
@@ -165,8 +159,6 @@ rtkit:x:111:118:RealtimeKit,,,:/proc:/bin/false
 \caption{icat -o 2048 kodi.raw 58201}
 \label{cmd:kodi-passwd}
 \end{cmd}
-
-\subsubsection{Software Kodi}
 
 \begin{cmd}[H]
 \begin{verbatim}
@@ -266,8 +258,6 @@ Extent Blocks:
 
 \subsection{Tvheadend-Server}
 
-\subsubsection{Abbild}
-
 \begin{cmd}[H]
 \begin{verbatim}
 DOS Partition Table
@@ -283,8 +273,6 @@ Units are in 512-byte sectors
 \caption{mmls tvheadend.raw}
 \label{cmd:tvheadend-mmls}
 \end{cmd}
-
-\subsubsection{Grundkonfiguration}
 
 \begin{cmd}[H]
 \begin{verbatim}
@@ -350,8 +338,6 @@ hts:x:108:113::/home/hts:/bin/bash
 \caption{icat -o 2048 tvheadend.raw 62405}
 \label{cmd:tvheadend-passwd}
 \end{cmd}
-
-\subsubsection{Software Tvheadend}
 
 \begin{cmd}[H]
 \begin{verbatim}
@@ -470,10 +456,7 @@ May  4 20:01:47 vagrant-ubuntu-trusty-64 tvheadend[834]: cwc: Attemping to conne
 \label{cmd:tvheadend-cwc}
 \end{cmd}
 
-
 \subsection{Smartcard-Server}
-
-\subsubsection{Abbild}
 
 \begin{cmd}[H]
 \begin{verbatim}
@@ -490,8 +473,6 @@ Units are in 512-byte sectors
 \caption{mmls oscam.raw}
 \label{cmd:oscam-mmls}
 \end{cmd}
-
-\subsubsection{Grundkonfiguration}
 
 \begin{cmd}[H]
 \begin{verbatim}
@@ -521,8 +502,6 @@ iface eth1 inet static
 \caption{icat -o 2048 oscam.raw 1383}
 \label{cmd:oscam-interfaces}
 \end{cmd}
-
-\subsubsection{Cardserver OSCam}
 
 \begin{cmd}[H]
 \begin{verbatim}

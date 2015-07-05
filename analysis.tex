@@ -47,11 +47,11 @@ Die Wurzel-Verzeichnisstruktur und die Linux-Kerneldatei \textit{vmlinux} im Roo
 \begin{table}[H]
 \centering
 \begin{tabular}{cccc}
-\hline 
+\toprule 
 Betriebssystem & Distribution & Version & Code-Name \\ 
-\hline 
+\midrule
 Linux & Ubuntu & 14.04.02 LTS & Trusty \\ 
-\hline 
+\bottomrule
 \end{tabular} 
 \caption{Informationen zum Betriebssystem des Wohnzimmer-PCs}
 \label{table:kodi-os}
@@ -93,13 +93,12 @@ Die eingerichteten Benutzer im Betriebssystem wurde der \textit{/etc/passwd} ent
 \begin{table}[H]
 \centering
 \begin{tabular}{ccccc}
-\hline 
+\toprule
 Benutzer & Benutzer-ID & Gruppen-ID & Heimat-Verzeichnis & Shell \\ 
-\hline 
+\midrule
 vagrant & 1000 & 1000 & /home/vagrant & /bin/bash \\ 
-\hline 
 ubuntu & 1001 & 1001 & /home/ubuntu & /bin/bash \\ 
-\hline 
+\bottomrule
 \end{tabular} 
 \caption{Konfigurierte Benutzer auf dem Wohnzimmer-PC}
 \end{table}
@@ -179,11 +178,11 @@ Sowohl die in der Logdatei ausgegebenen Betriebssystemversion (vergleiche \autor
 
 \begin{table}[H]
 \begin{tabular}{ccc}
-\hline 
+\toprule
 Erstellung & Letzter Zugriff & Letzte Änderung \\ 
-\hline 
+\midrule
 04.05.2015 um 21:44:22 & 04.05.2015 um 21:44:22 & 04.05.2015 um 21:59:21 \\ 
-\hline 
+\bottomrule
 \end{tabular}
 \caption{Zeitpunkte der letzten Dateisystem-Zugriffe auf die Log-Datei kodi.old.log}
 \label{table:kodi-logfileaccess}
@@ -248,11 +247,11 @@ Die wichtigsten Einstellungen aus dieser Datei sind in \autoref{table-kodi-tvhea
 \begin{table}[H]
 \centering
 \begin{tabular}{ccccc}
-\hline 
+\toprule
 IP-Adresse & HTSP Port & HTTP Port & Benutzer & Passwort \\ 
-\hline 
+\midrule
 192.168.178.253 & 9982 & 9981 & admin & 12345 \\ 
-\hline 
+\bottomrule
 \end{tabular}
 \caption{Konfiguration des Kodi PVR Tvheadend Addons}
 \label{table-kodi-tvheadend}
@@ -291,11 +290,11 @@ Mit den selbem Vorgehen wie in \autoref{sec:kodi-os} wurde in diesem Abbild das 
 \begin{table}[H]
 \centering
 \begin{tabular}{cccc}
-\hline 
+\toprule
 Betriebssystem & Distribution & Version & Code-Name \\ 
-\hline 
+\midrule
 Linux & Ubuntu & 14.04.02 LTS & Trusty \\ 
-\hline 
+\bottomrule
 \end{tabular} 
 \caption{Informationen zum Betriebssystem des Tvheadend-Servers}
 \label{table:tvheadend-os}
@@ -337,13 +336,12 @@ Die eingerichteten Benutzer im Betriebssystem wurde der \textit{/etc/passwd} ent
 \begin{table}[H]
 \centering
 \begin{tabular}{ccccc}
-\hline 
+\toprule
 Benutzer & Benutzer-ID & Gruppen-ID & Heimat-Verzeichnis & Shell \\ 
-\hline 
+\midrule
 hts & 108 & 113 & /home/hts & /bin/bash \\ 
-\hline 
 ubuntu & 1001 & 1001 & /home/ubuntu & /bin/bash \\ 
-\hline 
+\bottomrule
 \end{tabular} 
 \caption{Konfigurierte Benutzer auf dem Tvheadend-Server}
 \end{table}
@@ -418,11 +416,11 @@ Die über Kommando \autoref{cmd:tvheadend-rtlhdaccess} ermittelten Zugriffszeite
 
 \begin{table}[H]
 \begin{tabular}{ccc}
-\hline 
+\toprule
 Erstellung & Letzter Zugriff & Letzte Änderung \\ 
-\hline 
+\midrule
 04.05.2015 um 21:57:47 & 04.05.2015 um 21:57:47 & 04.05.2015 um 21:58:06 \\ 
-\hline 
+\bottomrule
 \end{tabular}
 \caption{Zeitpunkte der letzten Dateisystem-Zugriffe auf die Video-Datei \textit{"Wer wird Millionär? Überraschungs-Special.mkv"}}
 \label{table:tvheadend-rtlhdaccess}
@@ -430,7 +428,7 @@ Erstellung & Letzter Zugriff & Letzte Änderung \\
 
 Die Erstellungszeit und die Zeit der letzten Änderung der Video-Datei fällt in das Zeitfenster, in dem Kodi auf dem Wohnzimmer-PC ausgeführt wurde (siehe \autoref{table:kodi-logfileaccess}).
 
-Abschließend bestätigt die Online-TV-Recorder-Webseite\footnote{\href{http://www.onlinetvrecorder.com/v2/?go=download\&epg\_id=10438936}{Eintrag bei Online-TV-Recorder: http://www.onlinetvrecorder.com/v2/?go=download\&epg\_id=10438936}} die Ausstrahlung einer \textit{"Wer wird Millionaer UEberraschungs Special"}-Folge am 04.05.2015 von 20:15 bis 22:15 Uhr CEST.
+Abschließend bestätigt die Online-TV-Recorder-Webseite\footnote{\href{http://www.onlinetvrecorder.com/v2/?go=download\&epg\_id=10438936}{Eintrag bei Online-TV-Recorder: http://www.onlinetvrecorder.com/v2/?go=download\&epg\_id=10438936}} die Ausstrahlung einer \textit{"Wer wird Millionaer UEberraschungs Special"}-Folge am 04.05.2015 von 20:15 bis 22:15 Uhr.
 
 \subsection{Interaktion zwischen Wohnzimmer-PC und Tvheadend}
 
@@ -438,23 +436,18 @@ Kommando \autoref{cmd:tvheadend-subscription} bestimmt aus der Logdatei \textit{
 
 \begin{table}[H]
 \begin{tabular}{ccccc}
-\hline 
+\toprule
 TV-Sender & Kodi channel switch & Dauer & Tvheadend subscribe & Dauer \\ 
-\hline 
+\midrule
 ProSieben MAXX HD & 19:56:21 & - & 19:55:46 & - \\ 
-\hline 
 kabel eins HD & 19:56:46 & 25s & 19:56:10 & 24s \\ 
-\hline 
 n-tv HD & 19:56:57 & 11s & 19:56:21 & 11s \\ 
-\hline 
 TELE 5 HD & 19:57:12 & 15s & 19:56:35 & 14s \\ 
-\hline 
 Pro7 FUN HD & 19:57:42 & 30s & 19:57:04 & 29s \\ 
-\hline 
 RTL HD & 19:58:02 & 20s & 19:57:23 & 19s \\ 
-\hline 
+\bottomrule
 \end{tabular}
-\caption{Gegenüberstellung der Log-Einträge auf dem Wohnzimmer-PC (kodi) und Tvheadend}
+\caption{Gegenüberstellung der Log-Einträge von Kodi und Tvheadend}
 \label{table:tvheadend-logcompare}
 \end{table}
 
@@ -477,11 +470,11 @@ Die über Kommando \autoref{cmd:tvheadend-cwc} ermittelte CWC-Konfiguration\foot
 \begin{table}[H]
 \centering
 \begin{tabular}{ccccc}
-\hline 
+\toprule
 Hostname & Port & Username & Passwort & Enabled \\ 
-\hline 
+\midrule
 192.168.178.254 & 31000 & card & share & 1 \\ 
-\hline 
+\bottomrule
 \end{tabular}
 \caption{Wichtigste Parameter der CWC-Konfiguration auf Tvheadend-Server}
 \label{table:tvheadend-cwc}
