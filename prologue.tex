@@ -49,7 +49,7 @@ Als Analyse-Softwarepaket wurde Sleuth Kit\footnote{\href{http://www.sleuthkit.o
 
 \begin{table}[H]
 \centering
-\begin{tabular}{ccc}
+\begin{tabular}{lll}
 \toprule
 Ursprung & Tools & Version \\ 
 \midrule
@@ -70,7 +70,7 @@ Für das Abspielen der Videodatei in \autoref{sec:tvheadend-rtlhd} wurde der uni
 
 Direkt nach Erhalt eines Festplattenabbilds und der MD5-Prüfdatei, wurde mittels der MD5-Summe die Integrität des Abbilds überprüft (Zeitpunkte des Erhalts siehe \autoref{sec:contract-files}). Zur zentralen Aufbewahrung der MD5-Prüfsummen kam eine interne, passwortgeschützte Websoftware zum Einsatz, die die Prüfsummen revisionssicher ablegt. Das Festplattenabbild wurde auf einem nur einmal beschreibbaren WORM\footnote{\href{https://de.wikipedia.org/wiki/WORM}{Wikipedia-Artikel über WORM: https://de.wikipedia.org/wiki/WORM}}-Datenträger verschlüsselt archiviert. Abschließend erfolgte eine erneute Prüfung der MD5-Summe zur Sicherstellung der integeren Archivierung auf dem Datenträger und die Aufbewahrung des Datenträgers in einem Tresor.
 
-Für den Auftrag wurde eine eigene Untersuchungs-VM (siehe \autoref{sec:env}) angelegt und auf einer mit FileVault-2\footnote{\href{https://de.wikipedia.org/wiki/FileVault}{Wikipedia-Seite zu FileVault: https://de.wikipedia.org/wiki/FileVault}} verschlüsselten USB-Festplatte abgelegt. Die zu untersuchenden Festplattenabbilder sind auch auf dieser USB-Festplatte gespeichert worden.
+Für den Auftrag wurde eine eigene Untersuchungs-VM (siehe \autoref{sec:env}) angelegt und auf einer mit FileVault-2\footnote{\href{https://de.wikipedia.org/wiki/FileVault}{Wikipedia-Artikel über FileVault: https://de.wikipedia.org/wiki/FileVault}} verschlüsselten USB-Festplatte abgelegt. Die zu untersuchenden Festplattenabbilder sind auch auf dieser USB-Festplatte gespeichert worden.
 
 Bei Beginn einer Analyse-Sitzung wurde die USB-Festplatte mit dem Untersuchungs-PC verbunden und mittels Eingabe eines Passworts entsperrt bzw. entschlüsselt. Es folgte  mittels der in der Websoftware hinterlegten MD5-Summe die Prüfung der Integrität des zu untersuchenden Festplattenabbilds (siehe z.B. \autoref{sec:kodi-integrity}). Nach Beendigung der Sitzung wurde eine erneute MD5-Prüfung durchgeführt, die USB-Festplatte getrennt und in einem zweiten Tresor verwahrt.
 

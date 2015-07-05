@@ -508,13 +508,14 @@ Analog zu \autoref{sec:kodi-rawanalysis} wurde mit Hilfe des Kommandos \autoref{
 \subsubsection{Hostname}
 \label{sec:oscam-hostname}
 
-Die Datei \textit{/etc/hostname} mit der Inode 473 gibt Auskunft über den Hostnamen des Systems:
+Die Datei \textit{/etc/hostname} mit der Inode 473 gibt Auskunft über den Hostnamen des Systems (siehe Kommando \autoref{cmd:oscam-hostname}).
 
 \begin{cmd}
 \begin{verbatim}
 vagrant-ubuntu-trusty-64
 \end{verbatim}
 \caption{icat -o 2048 oscam.raw 473}
+\label{cmd:oscam-hostname}
 \end{cmd}
 
 Der Hostname lautet \textit{vagrant-ubuntu-trusty-64}.
@@ -563,7 +564,7 @@ Des Weiteren ist dem Log zu entnehmen, dass am protokollierten Datum ein Smartca
 2015/05/04 19:45:22 [..] HD02 [nagra] CAID: 1843
 \end{verbatim}
 
-Die Ausgabe des Kommando \autoref{cmd:oscam-logtail} liefert die letzten Zeilen aus der OSCam Log-Datei. Dort ist protokolliert, dass am 04.05.2015 um 19:55:25 Uhr sich die IP-Adresse des Tvheadend-Systems (192.167.178.253) erfolgreich verbunden hat und für den Zugriff auf die HD02 Karte freigeschaltet wurde. Das Datum und unter Berücksichtigung unterschiedlich angewandter Zeitzonen auch die Uhrzeit entsprechen den bisher festgestellten Zeitstempeln auf dem Tvheadend-Server. Die entsprechenden Einträge gekürzt aus der Log-Datei sind im Folgenden aufgeführt:
+Die Ausgabe des Kommando \autoref{cmd:oscam-logtail} liefert die letzten Zeilen aus der OSCam Log-Datei. Dort ist protokolliert, dass am 04.05.2015 um 19:55:25 Uhr sich die IP-Adresse des Tvheadend-Systems (192.167.178.253) erfolgreich verbunden hat und für den Zugriff auf die HD02 Karte freigeschaltet wurde. Das Datum und (unter Berücksichtigung unterschiedlich angewandter Zeitzonen) auch die Uhrzeit entsprechen den bisher festgestellten Zeitstempeln auf dem Tvheadend-Server. Die entsprechenden Einträge gekürzt aus der Log-Datei sind im Folgenden aufgeführt:
 
 \begin{verbatim}
 2015/05/04 19:55:25 [..] client connected to 31000 port
