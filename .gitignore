@@ -3,6 +3,8 @@
 *.out
 *.log
 *.toc
+*.lof
+*.lot
 *.dvi
 *.pdf
 *.gz
